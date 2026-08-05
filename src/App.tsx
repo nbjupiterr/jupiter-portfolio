@@ -1,122 +1,135 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ArtworkModal } from "./components/ArtworkModal/ArtworkModal";
+import { CustomCursor } from "./components/CustomCursor/CustomCursor";
+import {
+  HorizontalScroll,
+  type HorizontalScrollHandle,
+} from "./components/HorizontalScroll/HorizontalScroll";
+import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
+import { Navigation } from "./components/Navigation/Navigation";
+import { ProgressIndicator } from "./components/ProgressIndicator/ProgressIndicator";
+import { artworks, type Artwork } from "./data/artworks";
+import { useMediaQuery } from "./hooks/useMediaQuery";
+import { About } from "./sections/About/About";
+import { Contact } from "./sections/Contact/Contact";
+import { Gallery } from "./sections/Gallery/Gallery";
+import { Hero } from "./sections/Hero/Hero";
+import { Process } from "./sections/Process/Process";
+import "./styles/global.css";
+
+const SECTION_LABELS: Record<string, string> = {
+  hero: "I · Opening",
+  about: "II · About",
+  process: "III · Process",
+  gallery: "IV · Gallery",
+  contact: "V · Contact",
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const isDesktop = useMediaQuery("(min-width: 900px)");
+  const scrollRef = useRef<HorizontalScrollHandle>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeId, setActiveId] = useState("hero");
+  const [selected, setSelected] = useState<Artwork | null>(null);
+  const [gallerySet, setGallerySet] = useState<Artwork[]>(artworks);
+  const [loading, setLoading] = useState(true);
+  const [loadProgress, setLoadProgress] = useState(12);
+
+  useEffect(() => {
+    let done = false;
+    let frame = 0;
+    let hideTimer = 0;
+    const started = performance.now();
+
+    const complete = () => {
+      if (done) return;
+      done = true;
+      cancelAnimationFrame(frame);
+      setLoadProgress(100);
+      hideTimer = window.setTimeout(() => setLoading(false), 280);
+    };
+
+    const tick = (now: number) => {
+      if (done) return;
+      setLoadProgress(Math.min(92, 12 + (now - started) / 16));
+      frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    const maxWait = window.setTimeout(complete, 800);
+    window.addEventListener("load", complete, { once: true });
+    if (document.readyState === "complete") {
+      window.setTimeout(complete, 350);
+    }
+
+    return () => {
+      done = true;
+      cancelAnimationFrame(frame);
+      window.clearTimeout(hideTimer);
+      window.clearTimeout(maxWait);
+      window.removeEventListener("load", complete);
+    };
+  }, []);
+
+  const onScrollProgress = useCallback((value: number, id: string) => {
+    setProgress(value);
+    setActiveId(id);
+  }, []);
+
+  const scrollToSection = useCallback((id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+
+    const container = scrollRef.current?.element;
+    if (container && container.scrollWidth > container.clientWidth + 2) {
+      const left = target.offsetLeft;
+      container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+      return;
+    }
+
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const navActiveId = activeId === "hero" ? "" : activeId;
+
+  const modalSet = useMemo(() => {
+    if (!selected) return gallerySet;
+    if (gallerySet.some((piece) => piece.id === selected.id)) return gallerySet;
+    return artworks.filter((piece) => piece.category === selected.category);
+  }, [gallerySet, selected]);
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+      <LoadingScreen visible={loading} progress={loadProgress} />
+      <div className="app-shell" aria-busy={loading}>
+        <CustomCursor />
+        <Navigation activeId={navActiveId} onNavigate={scrollToSection} />
+        <ProgressIndicator
+          progress={progress}
+          label={SECTION_LABELS[activeId] ?? "Archive"}
+        />
+
+        <HorizontalScroll
+          ref={scrollRef}
+          enabled={isDesktop}
+          onScrollProgress={onScrollProgress}
         >
-          Count is {count}
-        </button>
-      </section>
+          <Hero onExplore={() => scrollToSection("about")} />
+          <About />
+          <Process />
+          <Gallery onSelect={setSelected} onFilterChange={setGallerySet} />
+          <Contact onBackToStart={() => scrollToSection("hero")} />
+        </HorizontalScroll>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+        <ArtworkModal
+          artwork={selected}
+          artworks={modalSet}
+          onClose={() => setSelected(null)}
+          onNavigate={setSelected}
+        />
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

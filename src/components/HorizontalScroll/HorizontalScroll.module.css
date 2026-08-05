@@ -1,0 +1,35 @@
+.scroller {
+  position: relative;
+  z-index: 2;
+}
+
+.horizontal {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: auto;
+  scrollbar-width: none;
+}
+
+.horizontal::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal .track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  width: max-content;
+  min-height: 100vh;
+}
+
+.vertical {
+  width: 100%;
+}
+
+.vertical .track {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

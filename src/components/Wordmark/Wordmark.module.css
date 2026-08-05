@@ -1,0 +1,70 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+}
+
+.letters {
+  display: inline-flex;
+}
+
+.letter {
+  display: inline-block;
+  padding-inline: 0.02em;
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s var(--ease-out);
+}
+
+.ornament {
+  width: 0.45em;
+  height: 0.45em;
+  background: var(--gold-muted);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+
+.hero {
+  font-size: clamp(3.2rem, 9vw, 7.5rem);
+  letter-spacing: 0.32em;
+}
+
+.section {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+}
+
+.compact {
+  font-size: 1.1rem;
+  letter-spacing: 0.22em;
+  gap: 0.4rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactive .letter:hover {
+    color: var(--bronze);
+    transform: translate3d(0, -3px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter {
+    transition: color 0.2s ease;
+  }
+}

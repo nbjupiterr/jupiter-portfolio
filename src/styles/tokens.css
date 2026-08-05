@@ -1,0 +1,35 @@
+:root {
+  --ivory: #f2ebe0;
+  --ivory-deep: #e6dccb;
+  --ivory-shadow: #d8cbb6;
+  --ink: #1a1612;
+  --ink-soft: #3d342c;
+  --ink-muted: #6b5f52;
+  --gold: #c4a35a;
+  --gold-bright: #d4b96a;
+  --gold-muted: #a68b4b;
+  --bronze: #7a5c3e;
+  --dust-blue: #6f7f8c;
+  --paper: #f7f1e7;
+
+  --font-display: "Cinzel", "Times New Roman", serif;
+  --font-body: "Source Serif 4", "Georgia", serif;
+
+  --space-xs: 0.35rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.5rem;
+  --space-2xl: 5.5rem;
+
+  --panel-width: 100vw;
+  --header-offset: 4.5rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 0.45s;
+
+  --z-nav: 40;
+  --z-progress: 35;
+  --z-loader: 60;
+  --z-modal: 50;
+  --z-cursor: 70;
+}
