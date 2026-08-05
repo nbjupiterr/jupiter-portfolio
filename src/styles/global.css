@@ -43,11 +43,6 @@ body::before {
   mix-blend-mode: multiply;
 }
 
-body.has-custom-cursor,
-body.has-custom-cursor * {
-  cursor: none !important;
-}
-
 img,
 svg {
   display: block;

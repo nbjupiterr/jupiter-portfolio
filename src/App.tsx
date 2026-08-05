@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArtworkModal } from "./components/ArtworkModal/ArtworkModal";
-import { CustomCursor } from "./components/CustomCursor/CustomCursor";
 import {
   HorizontalScroll,
   type HorizontalScrollHandle,
@@ -102,7 +101,6 @@ function App() {
     <>
       <LoadingScreen visible={loading} progress={loadProgress} />
       <div className="app-shell" aria-busy={loading}>
-        <CustomCursor />
         <Navigation activeId={navActiveId} onNavigate={scrollToSection} />
         <ProgressIndicator
           progress={progress}
