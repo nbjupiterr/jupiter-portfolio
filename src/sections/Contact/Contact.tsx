@@ -30,7 +30,7 @@ export function Contact({ onBackToStart }: ContactProps) {
             className={styles.linktree}
             href={site.linktree}
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
             data-cursor="link"
           >
             Open Linktree
