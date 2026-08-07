@@ -60,6 +60,10 @@ body::before {
 }
 
 @media (max-width: 899px) {
+  html {
+    --progress-offset: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+
   html,
   body {
     overflow-x: clip;

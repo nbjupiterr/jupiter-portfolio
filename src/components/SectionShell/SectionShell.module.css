@@ -62,6 +62,19 @@
   .section {
     min-height: auto;
     align-items: stretch;
+    flex-direction: column;
+  }
+
+  .numeral {
+    position: relative;
+    top: auto;
+    left: auto;
+    align-self: center;
+    margin: 0 0 0.45rem;
+  }
+
+  .inner {
+    width: 100%;
   }
 }
 
@@ -100,6 +113,23 @@
     width: min(100%, 68rem);
     display: flex;
     justify-content: center;
+  }
+
+  #about.section {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #about .numeral {
+    position: relative;
+    top: auto;
+    left: auto;
+    margin: 0 0 0.35rem;
+  }
+
+  #about .inner {
+    width: min(100%, 72rem);
   }
 
   .fluid {

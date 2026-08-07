@@ -6,7 +6,6 @@ import {
 } from "motion/react";
 import { ArtworkCard } from "../../components/ArtworkCard/ArtworkCard";
 import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
-import { Reveal } from "../../components/Reveal/Reveal";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import {
   artworksByCategory,
@@ -71,13 +70,35 @@ function keepCollapsedGalleryInView(
   }
 }
 
+function previewCountFor(category: ArtworkCategory) {
+  return category === "design" ? DESIGN_PREVIEW_COUNT : PREVIEW_COUNT;
+}
+
+function preloadThumbnails(artworks: Artwork[]) {
+  return Promise.all(
+    artworks.map(
+      (piece) =>
+        new Promise<void>((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+          img.src = piece.thumbnail;
+        }),
+    ),
+  );
+}
+
 export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const [filter, setFilter] = useState<ArtworkCategory>(DEFAULT_FILTER);
   const [expanded, setExpanded] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [categoryLoading, setCategoryLoading] = useState(false);
+  const [rowHoldHeight, setRowHoldHeight] = useState<number | null>(null);
   const clampScrollAfterFilter = useRef(false);
   const followAfterCollapse = useRef(false);
   const layoutRef = useRef<HTMLDivElement>(null);
+  const rowShellRef = useRef<HTMLDivElement>(null);
+  const filterBusy = useRef(false);
   const reduceMotion = useReducedMotion();
 
   const pieces = useMemo(() => artworksByCategory(filter), [filter]);
@@ -113,11 +134,32 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
       setCategoryOpen(false);
       return;
     }
-    clampScrollAfterFilter.current = true;
+    if (filterBusy.current) return;
+
+    filterBusy.current = true;
+    const rowShell = rowShellRef.current;
+    if (rowShell?.offsetHeight) {
+      setRowHoldHeight(rowShell.offsetHeight);
+    }
+    setCategoryLoading(true);
     setExpanded(false);
-    setFilter(next);
     setCategoryOpen(false);
-    onFilterChange?.(artworksByCategory(next));
+
+    const nextPieces = artworksByCategory(next);
+    const toPreload = nextPieces.slice(0, previewCountFor(next));
+
+    void preloadThumbnails(toPreload).then(() => {
+      clampScrollAfterFilter.current = true;
+      setFilter(next);
+      onFilterChange?.(nextPieces);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setCategoryLoading(false);
+          setRowHoldHeight(null);
+          filterBusy.current = false;
+        });
+      });
+    });
   };
 
   const toggleMore = () => {
@@ -177,6 +219,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
                         role="tab"
                         aria-selected={active}
                         className={`${styles.categoryOption} ${active ? styles.categoryOptionActive : ""}`}
+                        disabled={categoryLoading}
                         onClick={() => handleFilter(item.id)}
                         data-cursor="link"
                       >
@@ -203,6 +246,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
                   role="tab"
                   aria-selected={active}
                   className={`${styles.filter} ${active ? styles.filterActive : ""}`}
+                  disabled={categoryLoading}
                   onMouseDown={(event) => event.preventDefault()}
                   onClick={() => handleFilter(item.id)}
                   data-cursor="link"
@@ -214,12 +258,28 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
           </div>
         </div>
 
-        <div className={styles.row} aria-label="Gallery strip">
-          {preview.map((artwork) => (
-            <Reveal key={`${filter}-${artwork.id}`} className={styles.cell}>
-              <ArtworkCard artwork={artwork} onSelect={onSelect} />
-            </Reveal>
-          ))}
+        <div
+          className={styles.rowShell}
+          ref={rowShellRef}
+          data-loading={categoryLoading ? "true" : "false"}
+          aria-busy={categoryLoading}
+          style={
+            rowHoldHeight != null ? { minHeight: rowHoldHeight } : undefined
+          }
+        >
+          {categoryLoading ? (
+            <div className={styles.rowLoader} role="status">
+              <span className={styles.rowLoaderStar} aria-hidden="true" />
+              <span className={styles.rowLoaderText}>Loading archive</span>
+            </div>
+          ) : null}
+
+          <div className={styles.row} aria-label="Gallery strip">
+            {preview.map((artwork) => (
+              <div key={`${filter}-${artwork.id}`} className={styles.cell}>
+                <ArtworkCard artwork={artwork} onSelect={onSelect} />
+              </div>
+            ))}
 
           <AnimatePresence initial={false} onExitComplete={followCollapsedView}>
             {!expanded && hiddenCount > 0 ? (
@@ -276,6 +336,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
               </motion.button>
             ) : null}
           </AnimatePresence>
+        </div>
         </div>
       </div>
     </SectionShell>
