@@ -1,6 +1,6 @@
 export const site = {
   name: "Jupiter",
-  realName: "Gennievieve C. Begonia",
+  realName: "Gennievieve Begonia",
   title: "Artist Portfolio",
   email: "begonia.gennievieve.cerafica@gmail.com",
   linktree: "https://linktr.ee/nb.jupiterr",
