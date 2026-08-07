@@ -55,23 +55,33 @@
 .inner {
   width: min(100%, 72rem);
   margin-inline: auto;
-  max-height: var(--content-max-height);
   overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold-muted) transparent;
 }
 
-.inner::-webkit-scrollbar {
-  width: 4px;
-}
-
-.inner::-webkit-scrollbar-thumb {
-  background: rgba(166, 139, 75, 0.55);
+@media (max-width: 899px) {
+  .section {
+    min-height: auto;
+    align-items: stretch;
+  }
 }
 
 @media (min-width: 900px) {
+  .inner {
+    max-height: var(--content-max-height);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-muted) transparent;
+  }
+
+  .inner::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .inner::-webkit-scrollbar-thumb {
+    background: rgba(166, 139, 75, 0.55);
+  }
+
   .section {
     width: var(--panel-width);
     height: 100dvh;

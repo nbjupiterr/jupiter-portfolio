@@ -32,7 +32,11 @@ export function SectionShell({
           {numeral}
         </span>
       ) : null}
-      <div className={styles.inner} data-allow-vertical-scroll="true">
+      <div
+        className={styles.inner}
+        data-allow-vertical-scroll="true"
+        data-section-inner="true"
+      >
         {children}
       </div>
     </section>

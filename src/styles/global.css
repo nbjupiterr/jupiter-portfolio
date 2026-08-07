@@ -59,6 +59,22 @@ body::before {
   min-height: 100dvh;
 }
 
+@media (max-width: 899px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  #about,
+  #process,
+  #gallery,
+  #contact {
+    min-height: auto;
+    height: auto;
+    align-items: stretch;
+  }
+}
+
 img,
 svg {
   display: block;

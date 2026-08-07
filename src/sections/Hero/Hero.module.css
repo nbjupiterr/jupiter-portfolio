@@ -552,6 +552,28 @@
   }
 }
 
+@media (max-width: 899px) {
+  .hero {
+    content-visibility: visible;
+    contain-intrinsic-size: none;
+  }
+
+  .clock {
+    width: min(68vw, 14rem);
+    height: min(68vw, 14rem);
+    opacity: 0.34;
+  }
+
+  .content {
+    gap: 0.7rem;
+    padding-inline: 0.5rem;
+  }
+
+  .stage .orbitFrame {
+    display: none;
+  }
+}
+
 @media (min-width: 900px) {
   .hero {
     width: var(--panel-width);

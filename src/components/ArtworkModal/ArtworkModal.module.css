@@ -67,5 +67,6 @@
 
   .frame img {
     max-height: min(68vh, 34rem);
+    max-width: min(92vw, 48rem);
   }
 }
