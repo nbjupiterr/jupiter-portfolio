@@ -71,6 +71,7 @@ function keepCollapsedGalleryInView(
 export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const [filter, setFilter] = useState<ArtworkCategory>(DEFAULT_FILTER);
   const [expanded, setExpanded] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
   const pinAfterFilter = useRef(false);
   const followAfterCollapse = useRef(false);
   const layoutRef = useRef<HTMLDivElement>(null);
@@ -105,10 +106,14 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   };
 
   const handleFilter = (next: ArtworkCategory) => {
-    if (next === filter) return;
+    if (next === filter) {
+      setCategoryOpen(false);
+      return;
+    }
     pinAfterFilter.current = true;
     setExpanded(false);
     setFilter(next);
+    setCategoryOpen(false);
     onFilterChange?.(artworksByCategory(next));
   };
 
@@ -135,6 +140,50 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
               also enjoy adapting to different looks I&apos;m interested in studying.
             </p>
             <DecoDivider variant="crest" />
+          </div>
+
+          <div className={styles.categoryBar}>
+            <button
+              type="button"
+              className={styles.categoryToggle}
+              aria-expanded={categoryOpen}
+              aria-controls="gallery-category-menu"
+              onClick={() => setCategoryOpen((value) => !value)}
+              data-cursor="link"
+            >
+              {categoryOpen ? "Close" : categoryMeta[filter].title}
+            </button>
+            <AnimatePresence>
+              {categoryOpen ? (
+                <motion.div
+                  id="gallery-category-menu"
+                  className={styles.categoryMenu}
+                  role="tablist"
+                  aria-label="Artwork categories"
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: reduceMotion ? 0.12 : 0.22 }}
+                >
+                  {filters.map((item) => {
+                    const active = filter === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={active}
+                        className={`${styles.categoryOption} ${active ? styles.categoryOptionActive : ""}`}
+                        onClick={() => handleFilter(item.id)}
+                        data-cursor="link"
+                      >
+                        {item.label}
+                      </button>
+                    );
+                  })}
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
 
           <div

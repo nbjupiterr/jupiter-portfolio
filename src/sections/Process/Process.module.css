@@ -138,22 +138,35 @@
   .stack {
     width: 100%;
     gap: 1.25rem;
+    justify-items: center;
   }
 
   .header {
     max-width: none;
+    justify-items: center;
+    text-align: center;
   }
 
   .stage {
+    width: 100%;
+    max-width: 22rem;
     padding-left: 0;
     border-left: 0;
     border-top: 1px solid var(--deco-line);
     padding-top: 0.85rem;
+    justify-items: center;
+    text-align: center;
   }
 
   .marker {
     top: -0.18rem;
-    left: 0.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .swatchFrame,
+  .swatch {
+    margin-inline: auto;
   }
 
   .swatch img {
