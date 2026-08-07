@@ -175,7 +175,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   return (
     <SectionShell id="gallery" numeral="IV" fluid className={styles.shell}>
       <div className={styles.layout} ref={layoutRef}>
-        <div className={styles.introColumn}>
+        <div className={styles.headingChrome}>
           <div className={styles.headingBlock}>
             <p className={styles.eyebrow}>Art Archive</p>
             <h2 id="gallery-title">Gallery</h2>
@@ -217,30 +217,32 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
           </div>
         </div>
 
-        <div className={styles.scrollColumn}>
-          <div
-            className={styles.stickyTabs}
-            role="tablist"
-            aria-label="Artwork categories"
-          >
-            {filters.map((item) => {
-              const active = filter === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  className={`${styles.filter} ${active ? styles.filterActive : ""}`}
-                  disabled={categoryLoading}
-                  onMouseDown={(event) => event.preventDefault()}
-                  onClick={() => handleFilter(item.id)}
-                  data-cursor="link"
-                >
-                  {item.label}
-                </button>
-              );
-            })}
+        <div className={styles.strip}>
+          <div className={styles.tabRail}>
+            <div
+              className={styles.filters}
+              role="tablist"
+              aria-label="Artwork categories"
+            >
+              {filters.map((item) => {
+                const active = filter === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    className={`${styles.filter} ${active ? styles.filterActive : ""}`}
+                    disabled={categoryLoading}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => handleFilter(item.id)}
+                    data-cursor="link"
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
         <div

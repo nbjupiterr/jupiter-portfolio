@@ -1,41 +1,39 @@
 .shell {
-  align-items: flex-start;
+  align-items: center;
 }
 
 /*
-  Intro column sticks on horizontal scroll; tabs + artwork scroll together.
+  Column layout: heading sits in a full-viewport row (scrolls with the section).
+  Tab rail is sticky on horizontal scroll; artwork row is max-content width.
 */
 .layout {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: flex-start;
   width: max-content;
   min-width: 100vw;
   gap: 0.55rem;
 }
 
-.introColumn {
-  width: 100%;
+.headingChrome {
+  width: 100vw;
   box-sizing: border-box;
-  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  padding:
+    0.2rem
+    clamp(1.25rem, 4vw, 3.5rem)
+    0.15rem;
 }
 
-.scrollColumn {
+.strip {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  align-items: stretch;
   width: max-content;
-  min-width: 0;
+  gap: 0.35rem;
 }
 
-.stickyTabs {
+.tabRail {
   display: none;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.45rem 1.1rem;
-  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
-  box-sizing: border-box;
 }
 
 .headingBlock {
@@ -77,7 +75,15 @@
 }
 
 .filters {
-  display: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-left: auto;
+  gap: 0.45rem 1.1rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
 }
 
 .filter {
@@ -325,43 +331,21 @@
 }
 
 @media (min-width: 900px) {
-  .layout {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0;
-  }
-
-  .introColumn {
+  .tabRail {
+    display: flex;
     position: sticky;
     left: 0;
-    z-index: 6;
-    flex: 0 0 min(36vw, 26rem);
-    width: min(36vw, 26rem);
-    max-width: 26rem;
-    padding-top: 0.15rem;
-    padding-bottom: 0.75rem;
-    background: linear-gradient(
-      90deg,
-      rgba(247, 241, 231, 0.98) 72%,
-      rgba(247, 241, 231, 0.55) 88%,
-      transparent 100%
-    );
-  }
-
-  .scrollColumn {
-    flex: 0 0 auto;
-    padding-top: 0.15rem;
-  }
-
-  .stickyTabs {
-    display: flex;
-    width: max-content;
-    min-width: calc(100vw - min(36vw, 26rem));
+    z-index: 8;
+    width: 100vw;
+    box-sizing: border-box;
+    justify-content: flex-end;
+    padding-inline: clamp(1.25rem, 4vw, 3.5rem);
     padding-bottom: 0.15rem;
+    pointer-events: none;
   }
 
-  .categoryBar {
-    display: none;
+  .tabRail .filters {
+    pointer-events: auto;
   }
 }
 
@@ -376,16 +360,9 @@
     align-items: center;
   }
 
-  .introColumn {
-    padding-inline: clamp(1rem, 4vw, 1.5rem);
-  }
-
-  .scrollColumn {
+  .headingChrome {
     width: 100%;
-  }
-
-  .stickyTabs {
-    display: none;
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
   }
 
   .headingBlock {
