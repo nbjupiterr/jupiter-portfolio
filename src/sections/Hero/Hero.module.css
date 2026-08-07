@@ -45,24 +45,6 @@
     radial-gradient(circle at 50% 46%, transparent 32%, rgba(242, 235, 224, 0.5) 72%, rgba(242, 235, 224, 0.9) 100%);
 }
 
-/* Gold line-art ornaments — celestial / occult / deco */
-.ornament {
-  position: absolute;
-  opacity: 0.42;
-  pointer-events: none;
-  user-select: none;
-}
-
-.sunburst {
-  top: 50%;
-  left: 50%;
-  width: min(92vw, 38rem);
-  height: min(92vw, 38rem);
-  transform: translate(-50%, -52%);
-  opacity: 0.28;
-  animation: sun-drift 90s linear infinite;
-}
-
 .clock {
   position: absolute;
   top: 50%;
@@ -72,55 +54,6 @@
   transform: translate(-50%, -54%);
   opacity: 0.42;
   color: var(--gold);
-}
-
-.compassL,
-.compassR {
-  width: clamp(4.5rem, 11vw, 7.5rem);
-  height: clamp(4.5rem, 11vw, 7.5rem);
-  opacity: 0.48;
-  animation: ornament-float 12s ease-in-out infinite;
-}
-
-.compassL {
-  top: 18%;
-  left: clamp(1rem, 5vw, 4rem);
-}
-
-.compassR {
-  bottom: 18%;
-  right: clamp(1rem, 5vw, 4rem);
-  animation-delay: -4s;
-  transform: scaleX(-1);
-}
-
-.alchemy {
-  width: clamp(3.2rem, 8vw, 5.2rem);
-  height: clamp(3.2rem, 8vw, 5.2rem);
-  top: 22%;
-  right: clamp(2rem, 12vw, 8rem);
-  opacity: 0.5;
-  animation: ornament-float 14s ease-in-out -2s infinite;
-}
-
-.burstA,
-.burstB {
-  width: clamp(2rem, 4.5vw, 3.2rem);
-  height: clamp(2rem, 4.5vw, 3.2rem);
-  opacity: 0.55;
-  animation: spark-pulse 4.2s ease-in-out infinite;
-}
-
-.burstA {
-  bottom: 24%;
-  left: clamp(2.5rem, 14vw, 9rem);
-}
-
-.burstB {
-  top: 28%;
-  left: 42%;
-  animation-delay: 1.4s;
-  opacity: 0.22;
 }
 
 /*
@@ -249,20 +182,6 @@
   animation-delay: 0.6s;
 }
 
-.sparkC {
-  bottom: 26%;
-  left: 24%;
-  animation-delay: 1.1s;
-}
-
-.sparkD {
-  bottom: 30%;
-  right: 28%;
-  width: 0.28rem;
-  height: 0.28rem;
-  animation-delay: 1.7s;
-}
-
 .corner {
   position: absolute;
   width: clamp(2.4rem, 6vw, 3.8rem);
@@ -309,40 +228,6 @@
   max-height: var(--content-max-height);
   padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 3vw, 1.75rem);
   animation: content-rise 1.05s var(--ease-out) 0.15s both;
-}
-
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold-muted);
-}
-
-.kickerMark {
-  width: 0.4rem;
-  height: 0.4rem;
-  background: var(--gold-muted);
-  clip-path: polygon(
-    50% 0%,
-    61% 39%,
-    100% 50%,
-    61% 61%,
-    50% 100%,
-    39% 61%,
-    0% 50%,
-    39% 39%
-  );
-  animation: spark-pulse 2.8s ease-in-out infinite;
-}
-
-.midDivider {
-  width: min(100%, 18rem);
-  margin-block: 0.15rem;
-  animation: divider-glow 4.5s ease-in-out infinite;
 }
 
 .role {
@@ -454,16 +339,6 @@
   }
 }
 
-@keyframes divider-glow {
-  0%,
-  100% {
-    opacity: 0.7;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
 @keyframes content-rise {
   from {
     opacity: 0;
@@ -485,33 +360,11 @@
   }
 }
 
-@keyframes sun-drift {
-  from {
-    transform: translate(-50%, -52%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -52%) rotate(360deg);
-  }
-}
-
-@keyframes ornament-float {
-  0%,
-  100% {
-    opacity: 0.26;
-    translate: 0 0;
-  }
-  50% {
-    opacity: 0.4;
-    translate: 0 -0.35rem;
-  }
-}
-
 /* Freeze decorative motion once the hero leaves the viewport */
 .paused .lattice,
 .paused .orbitPath,
 .paused .spark,
 .paused .corner,
-.paused .kickerMark,
 .paused .scrollHint {
   animation-play-state: paused;
 }
@@ -521,16 +374,8 @@
   .orbitPath,
   .spark,
   .corner,
-  .kickerMark,
-  .midDivider,
   .scrollHint,
-  .content,
-  .sunburst,
-  .compassL,
-  .compassR,
-  .alchemy,
-  .burstA,
-  .burstB {
+  .content {
     animation: none !important;
   }
 

@@ -1,0 +1,18 @@
+---
+description: Jupiter portfolio — git workflow, media frames, and ornament constraints
+alwaysApply: true
+---
+
+# jupiterportfolio
+
+## Git
+After app code changes: run `npm run build`, conventional commit, push `origin/main` unless told otherwise. No amend/force-push unless requested.
+
+## Media in frames
+Artwork, process swatches, and About timelapse use `object-fit: contain` and frames that hug intrinsic aspect ratio — never `object-fit: cover`.
+
+## Ornaments
+Use SVGs under `public/assets/artdeco/`. Dividers: `diamond` or `crest` only — never sunburst/alchemy contact badges. UI sparkles: four-pointed star (`star.svg` / clip-path), not rotated squares.
+
+## Gallery / modal
+Desktop gallery: horizontal strip; mobile: stacked. Modal: image-only overview. Timelapse caption outside the video frame.
