@@ -2,26 +2,35 @@
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
-  display: grid;
-  place-items: center;
-  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:
+    calc(var(--header-offset) + 0.5rem)
+    0.75rem
+    calc(var(--progress-offset) + 0.5rem);
   background: rgba(26, 22, 18, 0.58);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   cursor: pointer;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dialog {
   position: relative;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
-  width: min(920px, 100%);
-  max-height: min(92vh, 980px);
-  padding: 1.25rem;
+  width: fit-content;
+  max-width: min(920px, calc(100vw - 1.5rem));
+  max-height: none;
+  margin: auto;
+  padding: 0;
   background: transparent;
   border: 0;
   outline: none;
-  cursor: pointer;
+  cursor: default;
 }
 
 .visuallyHidden {
@@ -39,8 +48,9 @@
 .frame {
   margin: 0;
   width: fit-content;
-  max-width: min(86vw, 52rem);
-  padding: 0.55rem;
+  max-width: 100%;
+  padding: 0.45rem;
+  line-height: 0;
   border: 1px solid var(--deco-line-strong);
   background:
     linear-gradient(180deg, rgba(247, 241, 231, 0.96), rgba(230, 220, 203, 0.98));
@@ -54,19 +64,26 @@
   display: block;
   width: auto;
   height: auto;
-  max-width: min(80vw, 48rem);
-  max-height: min(78vh, 42rem);
+  max-width: min(calc(100vw - 2.5rem), 48rem);
+  max-height: min(
+    calc(100dvh - var(--header-offset) - var(--progress-offset) - 2.5rem),
+    42rem
+  );
   object-fit: contain;
   background: var(--ivory-deep);
 }
 
-@media (max-width: 699px) {
+@media (min-width: 900px) {
+  .overlay {
+    padding: 1rem;
+  }
+
   .dialog {
-    padding: 0.75rem;
+    padding: 0.25rem;
   }
 
   .frame img {
-    max-height: min(68vh, 34rem);
-    max-width: min(92vw, 48rem);
+    max-width: min(80vw, 48rem);
+    max-height: min(78vh, 42rem);
   }
 }

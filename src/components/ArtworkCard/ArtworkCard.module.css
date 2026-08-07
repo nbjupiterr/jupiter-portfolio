@@ -12,6 +12,7 @@
   width: fit-content;
   max-width: 100%;
   padding: 0.35rem;
+  line-height: 0;
   border: 1px solid var(--deco-line-strong);
   background:
     linear-gradient(180deg, rgba(247, 241, 231, 0.72), rgba(230, 220, 203, 0.94));
@@ -77,8 +78,12 @@
 }
 
 @media (max-width: 899px) {
+  .card {
+    margin-inline: auto;
+  }
+
   .frame img {
-    max-height: min(44dvh, 18rem);
-    max-width: min(70vw, 18rem);
+    max-width: min(calc(100vw - 3.5rem), 20rem);
+    max-height: none;
   }
 }

@@ -88,10 +88,9 @@
   margin-bottom: 0.1rem;
   position: relative;
   background: var(--ivory-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+  display: block;
+  padding: 0.35rem;
+  line-height: 0;
   box-shadow:
     inset 0 0 0 1px rgba(242, 235, 224, 0.75),
     0 0 0 1px rgba(196, 163, 90, 0.12);
@@ -158,8 +157,10 @@
   }
 
   .swatch img {
-    max-width: min(100%, 18rem);
+    max-width: min(calc(100vw - 3.5rem), 18rem);
     max-height: none;
+    width: auto;
+    height: auto;
   }
 }
 

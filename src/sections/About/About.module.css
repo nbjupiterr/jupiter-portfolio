@@ -131,7 +131,8 @@
 .videoFrame {
   width: fit-content;
   max-width: 100%;
-  padding: 0.4rem;
+  padding: 0.35rem;
+  line-height: 0;
   border: 1px solid var(--deco-line-strong);
   background:
     linear-gradient(160deg, rgba(247, 241, 231, 0.9), rgba(230, 220, 203, 0.95));
@@ -142,9 +143,10 @@
 
 .timelapse {
   display: block;
-  width: min(100%, 15rem);
+  width: auto;
   height: auto;
-  max-height: min(56dvh, 26rem);
+  max-width: min(calc(100vw - 4rem), 16rem);
+  max-height: min(70dvh, 28rem);
   object-fit: contain;
   object-position: center;
   background: var(--ivory-deep);
@@ -187,12 +189,17 @@
 
   .media {
     justify-self: center;
-    width: 100%;
-    max-width: min(100%, 20rem);
+    width: fit-content;
+    max-width: 100%;
   }
 
   .videoShell {
     margin-inline: auto;
+    padding: 0.65rem;
+  }
+
+  .timelapse {
+    max-width: min(calc(100vw - 3.5rem), 17rem);
   }
 }
 

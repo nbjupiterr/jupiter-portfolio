@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Artwork } from "../../data/artworks";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 import styles from "./ArtworkModal.module.css";
 
 type ArtworkModalProps = {
@@ -17,6 +18,7 @@ export function ArtworkModal({
   onNavigate,
 }: ArtworkModalProps) {
   const reduceMotion = useReducedMotion();
+  const isMobile = useMediaQuery("(max-width: 899px)");
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const open = Boolean(artwork);
@@ -60,6 +62,11 @@ export function ArtworkModal({
   }, [artwork, artworks, onClose, onNavigate]);
 
   const duration = reduceMotion ? 0.12 : 0.38;
+  const motionInitial =
+    reduceMotion || isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.96 };
+  const motionAnimate = isMobile ? { opacity: 1 } : { opacity: 1, scale: 1 };
+  const motionExit =
+    reduceMotion || isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.98 };
 
   return (
     <AnimatePresence>
@@ -80,10 +87,10 @@ export function ArtworkModal({
             aria-modal="true"
             aria-labelledby={titleId}
             tabIndex={-1}
-            onClick={onClose}
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={reduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
+            onClick={(event) => event.stopPropagation()}
+            initial={motionInitial}
+            animate={motionAnimate}
+            exit={motionExit}
             transition={{ duration, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 id={titleId} className={styles.visuallyHidden}>

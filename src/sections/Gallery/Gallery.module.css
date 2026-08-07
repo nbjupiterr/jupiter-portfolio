@@ -236,12 +236,40 @@
   }
 
   .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: start;
+    gap: 1.35rem;
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    padding-bottom: 0.75rem;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+    padding-bottom: 0.5rem;
+  }
+
+  .cell {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .moreWrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .moreBtn {
+    writing-mode: horizontal-tb;
+    transform: none;
+    min-height: auto;
+    padding: 0.7rem 1.35rem;
+    border: 1px solid var(--deco-line-strong);
+    background: rgba(247, 241, 231, 0.65);
+  }
+
+  .lessLink {
+    justify-self: center;
+    margin: 0.25rem 0 0;
   }
 }
