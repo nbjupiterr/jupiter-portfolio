@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArtworkCard } from "../../components/ArtworkCard/ArtworkCard";
+import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import {
   artworksByCategory,
@@ -15,7 +16,7 @@ type GalleryProps = {
   onFilterChange?: (pieces: Artwork[]) => void;
 };
 
-const DEFAULT_FILTER: ArtworkCategory = "illustration";
+const DEFAULT_FILTER: ArtworkCategory = "design";
 
 const filters = categoryOrder.map((id) => ({
   id,
@@ -33,11 +34,13 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   };
 
   return (
-    <SectionShell id="gallery" numeral="IV" wide className={styles.shell}>
-      <div className={styles.header}>
-        <p className={styles.eyebrow}>Art Archive</p>
-        <h2 id="gallery-title">Gallery</h2>
-        <p className={styles.lede}>{categoryMeta[filter].description}</p>
+    <SectionShell id="gallery" numeral="IV" fluid className={styles.shell}>
+      <div className={styles.stickyChrome}>
+        <div className={styles.headingBlock}>
+          <p className={styles.eyebrow}>Art Archive</p>
+          <h2 id="gallery-title">Gallery</h2>
+          <DecoDivider variant="diamond" />
+        </div>
 
         <div
           className={styles.filters}
@@ -63,12 +66,9 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
         </div>
       </div>
 
-      <div className={styles.grid}>
-        {pieces.map((artwork, index) => (
-          <div
-            key={artwork.id}
-            className={`${styles.cell} ${index % 3 === 1 ? styles.offset : ""}`}
-          >
+      <div className={styles.row}>
+        {pieces.map((artwork) => (
+          <div key={artwork.id} className={styles.cell}>
             <ArtworkCard artwork={artwork} onSelect={onSelect} />
           </div>
         ))}

@@ -1,0 +1,36 @@
+.frame {
+  position: relative;
+  padding: 1rem;
+}
+
+.corner {
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  pointer-events: none;
+  background: url("/assets/artdeco/corner.svg") no-repeat center / contain;
+  opacity: 0.9;
+}
+
+.tl {
+  top: 0;
+  left: 0;
+}
+
+.tr {
+  top: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.bl {
+  bottom: 0;
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.br {
+  bottom: 0;
+  right: 0;
+  transform: scale(-1);
+}

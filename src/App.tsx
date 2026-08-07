@@ -31,7 +31,7 @@ function App() {
   const [activeId, setActiveId] = useState("hero");
   const [selected, setSelected] = useState<Artwork | null>(null);
   const [gallerySet, setGallerySet] = useState<Artwork[]>(() =>
-    artworksByCategory("illustration"),
+    artworksByCategory("design"),
   );
   const [loading, setLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(12);

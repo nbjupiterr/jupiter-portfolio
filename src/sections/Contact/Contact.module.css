@@ -18,20 +18,48 @@
 }
 
 .linktree {
+  position: relative;
   display: inline-flex;
   margin-top: 0.75rem;
   font-family: var(--font-display);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--ivory);
   background: var(--ink);
   border: 1px solid var(--ink);
-  padding: 0.9rem 1.5rem;
+  padding: 0.9rem 1.55rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(196, 163, 90, 0.35),
+    0 0 0 1px var(--ink);
   transition:
     background var(--duration) var(--ease-out),
     color var(--duration) var(--ease-out);
+}
+
+.linktree::before,
+.linktree::after {
+  content: "";
+  position: absolute;
+  width: 0.45rem;
+  height: 0.45rem;
+  border: 1px solid var(--gold-muted);
+  pointer-events: none;
+}
+
+.linktree::before {
+  top: 0.28rem;
+  left: 0.28rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.linktree::after {
+  right: 0.28rem;
+  bottom: 0.28rem;
+  border-left: 0;
+  border-top: 0;
 }
 
 .linktree:hover {
@@ -43,7 +71,7 @@
   margin-top: 0.5rem;
   font-family: var(--font-display);
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-muted);
   border-bottom: 1px solid rgba(166, 139, 75, 0.5);

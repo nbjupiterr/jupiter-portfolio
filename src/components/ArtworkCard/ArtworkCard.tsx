@@ -12,6 +12,7 @@ export function ArtworkCard({ artwork, onSelect }: ArtworkCardProps) {
       type="button"
       className={styles.card}
       onClick={() => onSelect(artwork)}
+      aria-label={artwork.altText}
       data-cursor="view"
     >
       <span className={styles.frame}>
@@ -21,10 +22,6 @@ export function ArtworkCard({ artwork, onSelect }: ArtworkCardProps) {
           loading="lazy"
           decoding="async"
         />
-      </span>
-      <span className={styles.meta}>
-        <span className={styles.title}>{artwork.title}</span>
-        {artwork.year ? <span className={styles.year}>{artwork.year}</span> : null}
       </span>
     </button>
   );

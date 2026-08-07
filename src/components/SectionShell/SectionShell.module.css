@@ -3,10 +3,11 @@
   flex: 0 0 auto;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   padding:
     calc(var(--header-offset) + 0.75rem)
     clamp(1.25rem, 4vw, 3.5rem)
-    calc(var(--progress-offset) + 0.75rem);
+    var(--progress-offset);
   display: flex;
   align-items: center;
 }
@@ -17,30 +18,55 @@
 
 .scrollable {
   align-items: flex-start;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .numeral {
   position: absolute;
-  top: calc(var(--header-offset) + 0.15rem);
+  top: calc(var(--header-offset) + 0.1rem);
   left: clamp(1.25rem, 4vw, 3.5rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: var(--font-display);
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
   color: var(--gold-muted);
+}
+
+.numeral::before,
+.numeral::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid var(--gold-muted);
+  transform: rotate(45deg);
 }
 
 .inner {
   width: min(100%, 72rem);
   margin-inline: auto;
+  max-height: var(--content-max-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-muted) transparent;
+}
+
+.inner::-webkit-scrollbar {
+  width: 4px;
+}
+
+.inner::-webkit-scrollbar-thumb {
+  background: rgba(166, 139, 75, 0.55);
 }
 
 @media (min-width: 900px) {
   .section {
     width: var(--panel-width);
-    height: 100vh;
-    min-height: 100vh;
+    height: 100dvh;
+    min-height: 100dvh;
+    max-height: 100dvh;
     overflow: hidden;
   }
 
@@ -48,9 +74,28 @@
     width: min(125vw, 78rem);
   }
 
-  /* Must beat .section { overflow: hidden } so tall panels can scroll. */
-  .scrollable {
-    overflow-x: hidden;
-    overflow-y: auto;
+  .wide .inner {
+    width: min(100%, 68rem);
+  }
+
+  .fluid {
+    width: max-content;
+    min-width: 100vw;
+    max-width: none;
+    padding-inline: 0;
+    /* Sticky gallery tabs need a visible overflow chain to the scroller */
+    overflow: visible;
+  }
+
+  .fluid .inner {
+    width: max-content;
+    max-width: none;
+    margin-inline: 0;
+    overflow: visible;
+    max-height: none;
+  }
+
+  .fluid .numeral {
+    left: clamp(1.25rem, 4vw, 3.5rem);
   }
 }

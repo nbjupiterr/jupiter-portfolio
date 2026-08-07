@@ -1,3 +1,5 @@
+import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
+import { DecoFrame } from "../../components/DecoFrame/DecoFrame";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { site } from "../../data/site";
 import styles from "./About.module.css";
@@ -11,18 +13,21 @@ export function About() {
           <h2 id="about-title" className={styles.name}>
             {site.name}
           </h2>
+          <DecoDivider variant="fan" />
           <p className={styles.bio}>{site.bio}</p>
           <p className={styles.focus}>{site.focus}</p>
         </div>
 
         <div className={styles.portrait} aria-hidden="true">
-          <div className={styles.frame}>
-            <div className={styles.symbol}>
-              <span className={styles.ring} />
-              <span className={styles.core} />
+          <DecoFrame>
+            <div className={styles.frame}>
+              <div className={styles.symbol}>
+                <span className={styles.ring} />
+                <span className={styles.core} />
+              </div>
+              <p>Signature mark</p>
             </div>
-            <p>Signature mark</p>
-          </div>
+          </DecoFrame>
         </div>
       </div>
     </SectionShell>

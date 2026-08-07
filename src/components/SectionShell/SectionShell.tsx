@@ -5,6 +5,8 @@ type SectionShellProps = {
   id: string;
   numeral?: string;
   wide?: boolean;
+  /** Grow with content for single-row galleries (horizontal site scroll). */
+  fluid?: boolean;
   scrollable?: boolean;
   children: ReactNode;
   className?: string;
@@ -14,6 +16,7 @@ export function SectionShell({
   id,
   numeral,
   wide = false,
+  fluid = false,
   scrollable = false,
   children,
   className = "",
@@ -21,16 +24,17 @@ export function SectionShell({
   return (
     <section
       id={id}
-      className={`${styles.section} ${wide ? styles.wide : ""} ${scrollable ? styles.scrollable : ""} ${className}`}
+      className={`${styles.section} ${wide ? styles.wide : ""} ${fluid ? styles.fluid : ""} ${scrollable ? styles.scrollable : ""} ${className}`}
       aria-labelledby={`${id}-title`}
-      {...(scrollable ? { "data-allow-vertical-scroll": "true" } : {})}
     >
       {numeral ? (
         <span className={styles.numeral} aria-hidden="true">
           {numeral}
         </span>
       ) : null}
-      <div className={styles.inner}>{children}</div>
+      <div className={styles.inner} data-allow-vertical-scroll="true">
+        {children}
+      </div>
     </section>
   );
 }

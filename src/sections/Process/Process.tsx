@@ -1,16 +1,18 @@
+import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { processStages } from "../../data/process";
 import styles from "./Process.module.css";
 
 export function Process() {
   return (
-    <SectionShell id="process" numeral="III">
+    <SectionShell id="process" numeral="III" wide className={styles.shell}>
       <div className={styles.header}>
         <p className={styles.eyebrow}>Process</p>
-        <h2 id="process-title">From spark to finished sky</h2>
+        <h2 id="process-title">From sketch to render</h2>
         <p className={styles.lede}>
-          Lorem ipsum stages of a single piece — a constellation of decisions rather than a wall of text.
+          Stages of a single piece — line, color, light, and finish.
         </p>
+        <DecoDivider variant="fan" />
       </div>
 
       <ol className={styles.timeline}>
@@ -21,13 +23,14 @@ export function Process() {
               style={{ background: stage.accent }}
               aria-hidden="true"
             />
-            <div
-              className={styles.swatch}
-              style={{
-                background: `linear-gradient(160deg, ${stage.accent}55, #e6dccb)`,
-              }}
-              aria-hidden="true"
-            />
+            <div className={styles.swatch}>
+              <img
+                src={stage.image}
+                alt={`${stage.title} stage`}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <p className={styles.index}>0{index + 1}</p>
             <h3>{stage.title}</h3>
             <p>{stage.description}</p>

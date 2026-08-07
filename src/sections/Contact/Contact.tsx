@@ -1,3 +1,4 @@
+import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { site } from "../../data/site";
@@ -12,6 +13,7 @@ export function Contact({ onBackToStart }: ContactProps) {
     <SectionShell id="contact" numeral="V">
       <div className={styles.layout}>
         <Wordmark size="section" />
+        <DecoDivider variant="diamond" />
         <h2 id="contact-title" className={styles.heading}>
           Until the next orbit
         </h2>

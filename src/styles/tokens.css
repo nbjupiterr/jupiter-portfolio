@@ -11,6 +11,8 @@
   --bronze: #7a5c3e;
   --dust-blue: #6f7f8c;
   --paper: #f7f1e7;
+  --deco-line: rgba(166, 139, 75, 0.45);
+  --deco-line-strong: rgba(122, 92, 62, 0.55);
 
   --font-display: "Fraunces", "Georgia", serif;
   --font-body: "Source Serif 4", "Georgia", serif;
@@ -24,7 +26,11 @@
 
   --panel-width: 100vw;
   --header-offset: 4.5rem;
-  --progress-offset: 3.25rem;
+  /* Track + label + breathing room + iOS home indicator */
+  --progress-offset: calc(5rem + env(safe-area-inset-bottom, 0px));
+  --content-max-height: calc(
+    100dvh - var(--header-offset) - var(--progress-offset) - 0.75rem
+  );
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 0.45s;
 

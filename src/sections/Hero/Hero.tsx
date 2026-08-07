@@ -1,3 +1,4 @@
+import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { site } from "../../data/site";
 import styles from "./Hero.module.css";
@@ -19,11 +20,12 @@ export function Hero({ onExplore }: HeroProps) {
         <span className={`${styles.star} ${styles.starD}`} />
       </div>
 
-      <div className={styles.content}>
+      <div className={styles.content} data-allow-vertical-scroll="true">
         <Wordmark as="h1" size="hero" />
+        <DecoDivider variant="diamond" />
         <p className={styles.title}>{site.title}</p>
         <p className={styles.support}>
-          A vintage celestial archive of characters, illustrations, and commissions.
+          A vintage celestial archive of illustrations, design, personal work, and commissions.
         </p>
         <div className={styles.actions}>
           <button
