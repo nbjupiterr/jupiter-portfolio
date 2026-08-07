@@ -260,12 +260,13 @@
 
 @media (max-width: 899px) {
   .shell {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .layout {
     width: 100%;
     min-width: 0;
+    align-items: center;
   }
 
   .stickyChrome {
@@ -274,17 +275,34 @@
     left: auto;
     width: 100%;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 0.65rem;
     padding-bottom: 0.15rem;
   }
 
   .headingBlock {
     width: 100%;
+    justify-items: center;
+    text-align: center;
   }
 
   .categoryBar {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .categoryToggle {
+    text-align: center;
+  }
+
+  .categoryMenu {
+    left: 50%;
+    right: auto;
+    width: min(100%, 22rem);
+    transform: translateX(-50%);
   }
 
   .filters {

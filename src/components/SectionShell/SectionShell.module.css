@@ -98,6 +98,8 @@
 
   .wide .inner {
     width: min(100%, 68rem);
+    display: flex;
+    justify-content: center;
   }
 
   .fluid {

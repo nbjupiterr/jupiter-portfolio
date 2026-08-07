@@ -37,11 +37,14 @@ function getScroller() {
   );
 }
 
-function pinScrollerToGallery() {
-  const gallery = document.getElementById("gallery");
+/** After the strip width changes, clamp scroll — do not snap to gallery start (causes tab jumps). */
+function clampHorizontalScrollAfterLayout() {
   const scroller = getScroller();
-  if (!gallery || !scroller) return;
-  scroller.scrollLeft = gallery.offsetLeft;
+  if (!scroller) return;
+  const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+  if (scroller.scrollLeft > max) {
+    scroller.scrollLeft = max;
+  }
 }
 
 /** Pull scroll back so the collapsed strip stays in the user’s view. */
@@ -72,7 +75,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const [filter, setFilter] = useState<ArtworkCategory>(DEFAULT_FILTER);
   const [expanded, setExpanded] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const pinAfterFilter = useRef(false);
+  const clampScrollAfterFilter = useRef(false);
   const followAfterCollapse = useRef(false);
   const layoutRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
@@ -85,12 +88,12 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const hiddenCount = Math.max(0, pieces.length - previewCount);
 
   useLayoutEffect(() => {
-    if (!pinAfterFilter.current) return;
-    pinAfterFilter.current = false;
-    pinScrollerToGallery();
+    if (!clampScrollAfterFilter.current) return;
+    clampScrollAfterFilter.current = false;
+    clampHorizontalScrollAfterLayout();
     const id = window.requestAnimationFrame(() => {
-      pinScrollerToGallery();
-      window.requestAnimationFrame(pinScrollerToGallery);
+      clampHorizontalScrollAfterLayout();
+      window.requestAnimationFrame(clampHorizontalScrollAfterLayout);
     });
     return () => window.cancelAnimationFrame(id);
   }, [filter]);
@@ -110,7 +113,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
       setCategoryOpen(false);
       return;
     }
-    pinAfterFilter.current = true;
+    clampScrollAfterFilter.current = true;
     setExpanded(false);
     setFilter(next);
     setCategoryOpen(false);

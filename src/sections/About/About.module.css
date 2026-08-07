@@ -180,7 +180,12 @@
 @media (max-width: 899px) {
   .layout {
     justify-items: center;
-    text-align: left;
+    text-align: center;
+  }
+
+  .focus::before {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .copy {

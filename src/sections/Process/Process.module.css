@@ -182,10 +182,15 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
     align-items: start;
+    width: min(100%, 62rem);
+    margin-inline: auto;
   }
 
   .header {
     grid-column: 1 / -1;
+    justify-items: center;
+    text-align: center;
+    max-width: none;
   }
 
   .stage {
