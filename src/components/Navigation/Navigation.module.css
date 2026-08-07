@@ -118,6 +118,11 @@
   border-bottom: 1px solid rgba(166, 139, 75, 0.2);
 }
 
+.mobileLink.active {
+  color: var(--ink);
+  border-bottom-color: var(--gold);
+}
+
 .mobileLink span {
   font-family: var(--font-display);
   color: var(--gold-muted);

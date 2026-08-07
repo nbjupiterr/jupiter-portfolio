@@ -9,6 +9,7 @@ import { Navigation } from "./components/Navigation/Navigation";
 import { ProgressIndicator } from "./components/ProgressIndicator/ProgressIndicator";
 import { artworks, artworksByCategory, type Artwork } from "./data/artworks";
 import { useMediaQuery } from "./hooks/useMediaQuery";
+import { scrollPanelToSection } from "./utils/scrollPanelToSection";
 import { About } from "./sections/About/About";
 import { Contact } from "./sections/Contact/Contact";
 import { Gallery } from "./sections/Gallery/Gallery";
@@ -83,8 +84,7 @@ function App() {
 
     const container = scrollRef.current?.element;
     if (container && container.scrollWidth > container.clientWidth + 2) {
-      const left = target.offsetLeft;
-      container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+      scrollPanelToSection(container, target, "smooth");
       return;
     }
 
