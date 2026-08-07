@@ -8,8 +8,8 @@ import styles from "./Process.module.css";
 export function Process() {
   return (
     <SectionShell id="process" numeral="III" wide className={styles.shell}>
-      <RevealGroup className={styles.stack} stagger={0.15} amount="some">
-        <RevealItem className={styles.header} y={18}>
+      <RevealGroup className={styles.stack} stagger={0.14}>
+        <RevealItem className={styles.header}>
           <p className={styles.eyebrow}>Process</p>
           <h2 id="process-title">From sketch to render</h2>
           <p className={styles.lede}>
@@ -19,7 +19,7 @@ export function Process() {
         </RevealItem>
 
         {processStages.map((stage, index) => (
-          <RevealItem key={stage.id} className={styles.stage} y={30}>
+          <RevealItem key={stage.id} className={styles.stage}>
             <div
               className={styles.marker}
               style={{ background: stage.accent }}

@@ -1,74 +1,113 @@
+import { motion, useReducedMotion, type Variants } from "motion/react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
-  motion,
-  useInView,
-  useReducedMotion,
-  type HTMLMotionProps,
-  type Variants,
-} from "motion/react";
-import { useRef, type ReactNode } from "react";
-import { useScrollRoot } from "../../hooks/useScrollRoot";
+  bindScrollDirection,
+  getScrollDirection,
+} from "../../hooks/scrollDirection";
+
+type RevealProps = {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  x?: number;
+  y?: number;
+  as?: "div" | "li";
+};
 
 type RevealGroupProps = {
   children: ReactNode;
   className?: string;
-  /** Seconds between each child */
   stagger?: number;
-  /**
-   * Intersection amount. Prefer "some" for wide horizontal sections
-   * so they don't fade out while still on screen.
-   */
   amount?: number | "some" | "all";
 };
 
 type RevealItemProps = {
   children: ReactNode;
   className?: string;
-  x?: number;
-  y?: number;
   as?: "div" | "li";
 };
 
-export function revealItemVariants(x = 0, y = 26): Variants {
-  return {
-    hidden: {
-      opacity: 0,
-      x,
-      y,
-      transition: {
-        duration: 0.38,
-        ease: [0.4, 0, 1, 1],
+/**
+ * Open on the way forward, close on the way back:
+ * - L?R: fade in when entering the screen; keep open (no close while going forward)
+ * - R?L: fade out while leaving the screen (still visible so you see it close)
+ *
+ * Uses the browser viewport as IO root so horizontal-scroller clipping works.
+ */
+function useScrollOpenClose() {
+  const ref = useRef<HTMLElement | null>(null);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    bindScrollDirection();
+
+    const ENTER = 0.15;
+    const EXIT = 0.4;
+
+    const apply = (ratio: number, intersecting: boolean) => {
+      const dir = getScrollDirection();
+
+      if (intersecting && ratio >= ENTER) {
+        setOpen(true);
+        return;
+      }
+
+      // Only close while scrolling back, and while still partly on screen
+      if (dir < 0 && (!intersecting || ratio < EXIT)) {
+        setOpen(false);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        apply(entry.intersectionRatio, entry.isIntersecting);
       },
-    },
-    shown: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: {
-        duration: 0.62,
-        ease: [0.22, 1, 0.36, 1],
+      {
+        root: null,
+        threshold: [0, 0.08, 0.15, 0.25, 0.4, 0.55, 0.75, 1],
       },
-    },
-  };
+    );
+
+    observer.observe(node);
+
+    // Sync current state on mount (e.g. already on screen)
+    const rect = node.getBoundingClientRect();
+    const vw = window.innerWidth || 1;
+    const visible = Math.max(
+      0,
+      Math.min(rect.right, vw) - Math.max(rect.left, 0),
+    );
+    const ratio = rect.width > 0 ? visible / rect.width : 0;
+    apply(ratio, ratio > 0);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, open };
 }
 
-/**
- * Parent for staggered enter / reverse-exit.
- * Direct animated children should be RevealItem.
- */
+const itemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    transition: { duration: 0.4, ease: "easeIn" },
+  },
+  shown: {
+    opacity: 1,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+};
+
 export function RevealGroup({
   children,
   className = "",
-  stagger = 0.14,
-  amount = 0.4,
+  stagger = 0.12,
 }: RevealGroupProps) {
   const reduceMotion = useReducedMotion();
-  const scrollRoot = useScrollRoot();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {
-    once: false,
-    amount,
-    root: scrollRoot ?? undefined,
-  });
+  const { ref, open } = useScrollOpenClose();
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
@@ -76,21 +115,21 @@ export function RevealGroup({
 
   return (
     <motion.div
-      ref={ref}
+      ref={ref as never}
       className={className}
       initial="hidden"
-      animate={inView ? "shown" : "hidden"}
+      animate={open ? "shown" : "hidden"}
       variants={{
         hidden: {
           transition: {
-            staggerChildren: Math.max(0.07, stagger * 0.7),
+            staggerChildren: Math.max(0.08, stagger * 0.85),
             staggerDirection: -1,
           },
         },
         shown: {
           transition: {
             staggerChildren: stagger,
-            delayChildren: 0.06,
+            delayChildren: 0.03,
           },
         },
       }}
@@ -100,16 +139,12 @@ export function RevealGroup({
   );
 }
 
-/** One beat in a RevealGroup sequence */
 export function RevealItem({
   children,
   className = "",
-  x = 0,
-  y = 26,
   as = "div",
 }: RevealItemProps) {
   const reduceMotion = useReducedMotion();
-  const variants = revealItemVariants(x, y);
 
   if (reduceMotion) {
     const Tag = as;
@@ -118,55 +153,41 @@ export function RevealItem({
 
   const MotionTag = as === "li" ? motion.li : motion.div;
   return (
-    <MotionTag className={className} variants={variants}>
+    <MotionTag className={className} variants={itemVariants}>
       {children}
     </MotionTag>
   );
 }
 
-type RevealProps = {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  x?: number;
-  y?: number;
-} & Omit<HTMLMotionProps<"div">, "children" | "initial" | "animate" | "variants">;
-
-/** Single-block reveal when stagger is not needed */
 export function Reveal({
   children,
   className = "",
   delay = 0,
-  x = 0,
-  y = 22,
+  as = "div",
 }: RevealProps) {
   const reduceMotion = useReducedMotion();
-  const scrollRoot = useScrollRoot();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, {
-    once: false,
-    amount: 0.4,
-    root: scrollRoot ?? undefined,
-  });
+  const { ref, open } = useScrollOpenClose();
 
   if (reduceMotion) {
-    return <div className={className}>{children}</div>;
+    const Tag = as;
+    return <Tag className={className}>{children}</Tag>;
   }
 
+  const MotionTag = as === "li" ? motion.li : motion.div;
+
   return (
-    <motion.div
-      ref={ref}
+    <MotionTag
+      ref={ref as never}
       className={className}
-      initial="hidden"
-      animate={inView ? "shown" : "hidden"}
-      variants={revealItemVariants(x, y)}
-      transition={
-        inView
-          ? { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }
-          : { duration: 0.36, ease: [0.4, 0, 1, 1] }
-      }
+      initial={{ opacity: 0 }}
+      animate={{ opacity: open ? 1 : 0 }}
+      transition={{
+        duration: open ? 0.45 : 0.5,
+        delay: open ? delay : 0,
+        ease: open ? "easeOut" : "easeIn",
+      }}
     >
       {children}
-    </motion.div>
+    </MotionTag>
   );
 }

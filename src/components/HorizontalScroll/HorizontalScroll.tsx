@@ -2,10 +2,10 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   type ReactNode,
 } from "react";
+import { bindScrollDirection } from "../../hooks/scrollDirection";
 import { ScrollRootContext } from "../../hooks/useScrollRoot";
 import styles from "./HorizontalScroll.module.css";
 
@@ -133,13 +133,14 @@ export const HorizontalScroll = forwardRef<
     };
   }, [enabled, onScrollProgress]);
 
-  const scrollRoot = useMemo(
-    () => (enabled ? scrollerRef : null),
-    [enabled],
-  );
+  useEffect(() => {
+    bindScrollDirection();
+    const id = window.requestAnimationFrame(() => bindScrollDirection());
+    return () => window.cancelAnimationFrame(id);
+  }, [enabled]);
 
   return (
-    <ScrollRootContext.Provider value={scrollRoot}>
+    <ScrollRootContext.Provider value={enabled ? scrollerRef : null}>
       <div
         ref={scrollerRef}
         className={`${styles.scroller} ${enabled ? styles.horizontal : styles.vertical}`}

@@ -77,7 +77,7 @@ export function ArtworkModal({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [artwork, artworks, onClose, onNavigate]);
 
-  const duration = reduceMotion ? 0.12 : 0.28;
+  const duration = reduceMotion ? 0.12 : 0.38;
 
   const go = (direction: -1 | 1) => {
     if (!artwork) return;
@@ -105,9 +105,9 @@ export function ArtworkModal({
             aria-modal="true"
             aria-labelledby={titleId}
             onClick={(event) => event.stopPropagation()}
-            initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: 8 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={reduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
             transition={{ duration, ease: [0.22, 1, 0.36, 1] }}
           >
             <h2 id={titleId} className={styles.visuallyHidden}>

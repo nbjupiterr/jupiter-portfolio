@@ -5,8 +5,9 @@
   display: grid;
   place-items: center;
   padding: 1rem;
-  background: rgba(26, 22, 18, 0.5);
-  backdrop-filter: blur(4px);
+  background: rgba(26, 22, 18, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .dialog {
@@ -15,7 +16,7 @@
   place-items: center;
   width: min(920px, 100%);
   max-height: min(92vh, 980px);
-  padding: 2.5rem 3.25rem 1.75rem;
+  padding: 2.5rem 4rem 1.75rem;
   background: transparent;
   border: 0;
 }
@@ -35,16 +36,23 @@
 .close {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 0.25rem;
   z-index: 2;
   font-family: var(--font-display);
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--deco-line);
+  padding: 0.2rem 0.1rem 0.25rem;
+  transition: color var(--duration) var(--ease-out);
+}
+
+.close:hover {
   color: var(--ink);
-  background: rgba(242, 235, 224, 0.92);
-  border: 1px solid rgba(166, 139, 75, 0.45);
-  padding: 0.35rem 0.55rem;
+  border-bottom-color: var(--gold);
 }
 
 .frame {
@@ -75,22 +83,67 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--font-display);
   font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--gold);
+  background: transparent;
+  border: 0;
+  padding: 0.35rem 0.15rem;
+  transition: color var(--duration) var(--ease-out);
+}
+
+.nav::before,
+.nav::after {
+  content: "";
+  width: 1.1rem;
+  height: 1px;
+  background: var(--gold);
+  transition: width var(--duration) var(--ease-out);
+}
+
+.prev::before {
+  content: "‹";
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.prev::after {
+  display: none;
+}
+
+.next::before {
+  display: none;
+}
+
+.next::after {
+  content: "›";
+  width: auto;
+  height: auto;
+  background: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: inherit;
+}
+
+.nav:hover {
   color: var(--ink);
-  background: rgba(242, 235, 224, 0.9);
-  border: 1px solid rgba(166, 139, 75, 0.4);
-  padding: 0.45rem 0.55rem;
 }
 
 .prev {
-  left: 0;
+  left: 0.15rem;
 }
 
 .next {
-  right: 0;
+  right: 0.15rem;
 }
 
 @media (max-width: 699px) {

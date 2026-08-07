@@ -1,8 +1,12 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "motion/react";
 import { ArtworkCard } from "../../components/ArtworkCard/ArtworkCard";
 import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
-import { RevealGroup, RevealItem } from "../../components/Reveal/Reveal";
+import { Reveal } from "../../components/Reveal/Reveal";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import {
   artworksByCategory,
@@ -20,31 +24,64 @@ type GalleryProps = {
 
 const DEFAULT_FILTER: ArtworkCategory = "design";
 const PREVIEW_COUNT = 4;
+const DESIGN_PREVIEW_COUNT = 6;
 
 const filters = categoryOrder.map((id) => ({
   id,
   label: categoryMeta[id].title,
 }));
 
-function pinScrollerToGallery() {
-  const gallery = document.getElementById("gallery");
-  const scroller = document.querySelector<HTMLElement>(
+function getScroller() {
+  return document.querySelector<HTMLElement>(
     "[data-horizontal-scroller='true']",
   );
+}
+
+function pinScrollerToGallery() {
+  const gallery = document.getElementById("gallery");
+  const scroller = getScroller();
   if (!gallery || !scroller) return;
   scroller.scrollLeft = gallery.offsetLeft;
+}
+
+/** Pull scroll back so the collapsed strip stays in the user’s view. */
+function keepCollapsedGalleryInView(
+  layout: HTMLElement | null,
+  smooth: boolean,
+) {
+  const gallery = document.getElementById("gallery");
+  const scroller = getScroller();
+  if (!gallery || !scroller || !layout) return;
+
+  const end = gallery.offsetLeft + layout.offsetWidth;
+  const target = Math.max(
+    gallery.offsetLeft,
+    Math.max(0, end - scroller.clientWidth),
+  );
+
+  if (scroller.scrollLeft <= target + 2) return;
+
+  if (smooth) {
+    scroller.scrollTo({ left: target, behavior: "smooth" });
+  } else {
+    scroller.scrollLeft = target;
+  }
 }
 
 export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const [filter, setFilter] = useState<ArtworkCategory>(DEFAULT_FILTER);
   const [expanded, setExpanded] = useState(false);
   const pinAfterFilter = useRef(false);
+  const followAfterCollapse = useRef(false);
+  const layoutRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
 
   const pieces = useMemo(() => artworksByCategory(filter), [filter]);
-  const preview = pieces.slice(0, PREVIEW_COUNT);
-  const rest = expanded ? pieces.slice(PREVIEW_COUNT) : [];
-  const hiddenCount = Math.max(0, pieces.length - PREVIEW_COUNT);
+  const previewCount =
+    filter === "design" ? DESIGN_PREVIEW_COUNT : PREVIEW_COUNT;
+  const preview = pieces.slice(0, previewCount);
+  const rest = expanded ? pieces.slice(previewCount) : [];
+  const hiddenCount = Math.max(0, pieces.length - previewCount);
 
   useLayoutEffect(() => {
     if (!pinAfterFilter.current) return;
@@ -55,26 +92,40 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
       window.requestAnimationFrame(pinScrollerToGallery);
     });
     return () => window.cancelAnimationFrame(id);
-  }, [filter, pieces, expanded]);
+  }, [filter]);
+
+  const followCollapsedView = () => {
+    if (!followAfterCollapse.current) return;
+    followAfterCollapse.current = false;
+    keepCollapsedGalleryInView(layoutRef.current, !reduceMotion);
+    // Second pass after layout settles
+    window.requestAnimationFrame(() => {
+      keepCollapsedGalleryInView(layoutRef.current, false);
+    });
+  };
 
   const handleFilter = (next: ArtworkCategory) => {
     if (next === filter) return;
     pinAfterFilter.current = true;
-    pinScrollerToGallery();
     setExpanded(false);
     setFilter(next);
     onFilterChange?.(artworksByCategory(next));
   };
 
   const toggleMore = () => {
-    pinAfterFilter.current = true;
-    pinScrollerToGallery();
-    setExpanded((value) => !value);
+    setExpanded((value) => {
+      if (value) {
+        followAfterCollapse.current = true;
+        // Fallback if exit-complete doesn’t fire (e.g. reduced motion)
+        window.setTimeout(followCollapsedView, reduceMotion ? 0 : 420);
+      }
+      return !value;
+    });
   };
 
   return (
     <SectionShell id="gallery" numeral="IV" fluid className={styles.shell}>
-      <div className={styles.layout}>
+      <div className={styles.layout} ref={layoutRef}>
         <div className={styles.stickyChrome}>
           <div className={styles.headingBlock}>
             <p className={styles.eyebrow}>Art Archive</p>
@@ -107,57 +158,69 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
           </div>
         </div>
 
-        <RevealGroup className={styles.row} stagger={0.12} amount="some">
+        <div className={styles.row} aria-label="Gallery strip">
           {preview.map((artwork) => (
-            <RevealItem key={artwork.id} className={styles.cell} y={22}>
+            <Reveal key={`${filter}-${artwork.id}`} className={styles.cell}>
               <ArtworkCard artwork={artwork} onSelect={onSelect} />
-            </RevealItem>
+            </Reveal>
           ))}
 
-          {!expanded && hiddenCount > 0 ? (
-            <RevealItem className={styles.moreWrap} y={16}>
-              <button
-                type="button"
-                className={styles.moreBtn}
-                onClick={toggleMore}
-                data-cursor="link"
-                aria-label={`See ${hiddenCount} more artworks`}
+          <AnimatePresence initial={false} onExitComplete={followCollapsedView}>
+            {!expanded && hiddenCount > 0 ? (
+              <motion.div
+                key="see-more"
+                className={styles.moreWrap}
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
               >
-                See more
-              </button>
-            </RevealItem>
-          ) : null}
+                <button
+                  type="button"
+                  className={styles.moreBtn}
+                  onClick={toggleMore}
+                  data-cursor="link"
+                  aria-label={`See ${hiddenCount} more artworks`}
+                >
+                  See more
+                </button>
+              </motion.div>
+            ) : null}
 
-          <AnimatePresence initial={false}>
             {rest.map((artwork, index) => (
               <motion.div
-                key={artwork.id}
+                key={`${filter}-${artwork.id}-extra`}
                 className={styles.cell}
                 initial={reduceMotion ? false : { opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0, x: 12 }}
                 transition={{
-                  duration: 0.4,
-                  delay: index * 0.06,
-                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.3,
+                  delay: reduceMotion ? 0 : Math.min(index, 6) * 0.035,
+                  ease: "easeOut",
                 }}
               >
                 <ArtworkCard artwork={artwork} onSelect={onSelect} />
               </motion.div>
             ))}
-          </AnimatePresence>
 
-          {expanded && hiddenCount > 0 ? (
-            <button
-              type="button"
-              className={styles.lessLink}
-              onClick={toggleMore}
-              data-cursor="link"
-            >
-              Show less
-            </button>
-          ) : null}
-        </RevealGroup>
+            {expanded && hiddenCount > 0 ? (
+              <motion.button
+                key="show-less"
+                type="button"
+                className={styles.lessLink}
+                onClick={toggleMore}
+                data-cursor="link"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              >
+                Show less
+              </motion.button>
+            ) : null}
+          </AnimatePresence>
+        </div>
       </div>
     </SectionShell>
   );

@@ -75,8 +75,8 @@ function numbered(category: ArtworkCategory, numbers: number[]): Artwork[] {
 export const artworks: Artwork[] = [
   // Display order: 03 first, 01 second-to-last, 02 last
   ...numbered("illustration", [3, 4, 5, 6, 7, 8, 1, 2]),
-  // 10 removed — asset failed to load in gallery
-  ...numbered("design", [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+  // 10 removed — asset failed to load; 01 last per Moat
+  ...numbered("design", [2, 3, 4, 5, 6, 7, 8, 9, 1]),
   ...numbered("personal", [1, 2, 3, 4, 5]),
   // Folder numbering skips 3 by design
   ...numbered("commission", [1, 2, 4, 5, 6, 7, 8, 9]),

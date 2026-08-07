@@ -1,5 +1,4 @@
 import { CelestialClock } from "../../components/CelestialClock/CelestialClock";
-import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { site } from "../../data/site";
 import styles from "./Hero.module.css";
@@ -21,38 +20,7 @@ export function Hero({ onExplore }: HeroProps) {
         <div className={styles.lattice} />
         <div className={styles.vignette} />
 
-        <img
-          className={`${styles.ornament} ${styles.sunburst}`}
-          src="/assets/artdeco/sunburst-rays.svg"
-          alt=""
-        />
         <CelestialClock className={styles.clock} />
-
-        <img
-          className={`${styles.ornament} ${styles.compassL}`}
-          src="/assets/artdeco/compass-rose.svg"
-          alt=""
-        />
-        <img
-          className={`${styles.ornament} ${styles.compassR}`}
-          src="/assets/artdeco/compass-rose.svg"
-          alt=""
-        />
-        <img
-          className={`${styles.ornament} ${styles.alchemy}`}
-          src="/assets/artdeco/alchemy-seal.svg"
-          alt=""
-        />
-        <img
-          className={`${styles.ornament} ${styles.burstA}`}
-          src="/assets/artdeco/starburst.svg"
-          alt=""
-        />
-        <img
-          className={`${styles.ornament} ${styles.burstB}`}
-          src="/assets/artdeco/starburst.svg"
-          alt=""
-        />
 
         <div className={styles.orbits}>
           {orbits.map((orbit) => (
@@ -69,8 +37,6 @@ export function Hero({ onExplore }: HeroProps) {
 
         <span className={`${styles.spark} ${styles.sparkA}`} />
         <span className={`${styles.spark} ${styles.sparkB}`} />
-        <span className={`${styles.spark} ${styles.sparkC}`} />
-        <span className={`${styles.spark} ${styles.sparkD}`} />
 
         <span className={`${styles.corner} ${styles.tl}`} />
         <span className={`${styles.corner} ${styles.tr}`} />
@@ -86,8 +52,6 @@ export function Hero({ onExplore }: HeroProps) {
         </p>
 
         <Wordmark as="h1" size="hero" interactive={false} />
-
-        <DecoDivider variant="diamond" className={styles.midDivider} />
 
         <p className={styles.role}>{site.title}</p>
         <p className={styles.support}>

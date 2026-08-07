@@ -5,7 +5,6 @@ import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { site } from "../../data/site";
 import styles from "./About.module.css";
 
-/** Intrinsic size of the altered timelapse — border hugs this ratio */
 const TIMELAPSE_RATIO = "1356 / 2036";
 const TIMELAPSE_SRC = "/assets/video/timelapse.mp4";
 
@@ -54,8 +53,8 @@ export function About() {
 
   return (
     <SectionShell id="about" numeral="II">
-      <RevealGroup className={styles.layout} stagger={0.18} amount="some">
-        <RevealItem className={styles.copy} x={-28} y={0}>
+      <RevealGroup className={styles.layout} stagger={0.16}>
+        <RevealItem className={styles.copy}>
           <p className={styles.eyebrow}>About</p>
           <h2 id="about-title" className={styles.name}>
             {site.name}
@@ -65,7 +64,7 @@ export function About() {
           <p className={styles.focus}>{site.focus}</p>
         </RevealItem>
 
-        <RevealItem className={styles.media} x={28} y={0}>
+        <RevealItem className={styles.media}>
           <div className={styles.videoShell}>
             <span className={`${styles.corner} ${styles.tl}`} aria-hidden="true" />
             <span className={`${styles.corner} ${styles.tr}`} aria-hidden="true" />

@@ -12,22 +12,22 @@ type ContactProps = {
 export function Contact({ onBackToStart }: ContactProps) {
   return (
     <SectionShell id="contact" numeral="V">
-      <RevealGroup className={styles.layout} stagger={0.13} amount="some">
-        <RevealItem y={18}>
+      <RevealGroup className={styles.layout} stagger={0.11}>
+        <RevealItem>
           <Wordmark size="section" />
         </RevealItem>
-        <RevealItem y={14}>
+        <RevealItem>
           <DecoDivider variant="diamond" />
         </RevealItem>
-        <RevealItem y={16}>
+        <RevealItem>
           <h2 id="contact-title" className={styles.heading}>
             Until the next orbit
           </h2>
         </RevealItem>
-        <RevealItem y={14}>
+        <RevealItem>
           <p className={styles.closing}>{site.closing}</p>
         </RevealItem>
-        <RevealItem y={12}>
+        <RevealItem>
           <a
             className={styles.linktree}
             href={site.linktree}
@@ -38,7 +38,7 @@ export function Contact({ onBackToStart }: ContactProps) {
             Open Linktree
           </a>
         </RevealItem>
-        <RevealItem y={10}>
+        <RevealItem>
           <button
             type="button"
             className={styles.back}
