@@ -1,4 +1,5 @@
 import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
+import { Reveal } from "../../components/Reveal/Reveal";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { site } from "../../data/site";
@@ -11,9 +12,9 @@ type ContactProps = {
 export function Contact({ onBackToStart }: ContactProps) {
   return (
     <SectionShell id="contact" numeral="V">
-      <div className={styles.layout}>
+      <Reveal className={styles.layout} y={26}>
         <Wordmark size="section" />
-        <DecoDivider variant="diamond" />
+        <DecoDivider variant="sunburst" />
         <h2 id="contact-title" className={styles.heading}>
           Until the next orbit
         </h2>
@@ -37,7 +38,7 @@ export function Contact({ onBackToStart }: ContactProps) {
         >
           Back to start
         </button>
-      </div>
+      </Reveal>
     </SectionShell>
   );
 }

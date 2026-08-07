@@ -1,13 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 40" fill="none">
-  <g stroke="#a68b4b" stroke-width="1.25" stroke-linecap="square">
-    <path d="M8 20h150"/>
-    <path d="M322 20h150"/>
-    <path d="M168 20h42"/>
-    <path d="M270 20h42"/>
-    <path d="M240 6l10 14-10 14-10-14 10-14z"/>
-    <path d="M240 12l5 7-5 7-5-7 5-7z" fill="#a68b4b" stroke="none"/>
-    <path d="M158 20l7-5 7 5-7 5-7-5z" fill="#a68b4b" stroke="none"/>
-    <path d="M308 20l7-5 7 5-7 5-7-5z" fill="#a68b4b" stroke="none"/>
-    <path d="M12 16h20M12 24h20M448 16h20M448 24h20" stroke-width="1"/>
+  <g fill="#a68b4b" stroke="none">
+    <path d="M8 19.5h155v1H8z" opacity="0.9"/>
+    <path d="M317 19.5h155v1H317z" opacity="0.9"/>
+    <path d="M175 19.5h30v1h-30z" opacity="0.7"/>
+    <path d="M275 19.5h30v1h-30z" opacity="0.7"/>
+    <!-- center sparkle ✦ -->
+    <path d="M240 4.5l2.4 13.1L255.5 20l-13.1 2.4L240 35.5l-2.4-13.1L224.5 20l13.1-2.4z"/>
+    <path d="M240 11.5l1.15 6.2L247.4 19l-6.25 1.15L240 26.5l-1.15-6.35L232.6 19l6.25-1.3z" fill="#c4a35a"/>
+    <!-- flanking ✦ -->
+    <path d="M162 12.2l0.9 4.9 4.9 0.9-4.9 0.9-0.9 4.9-0.9-4.9-4.9-0.9 4.9-0.9z"/>
+    <path d="M318 12.2l0.9 4.9 4.9 0.9-4.9 0.9-0.9 4.9-0.9-4.9-4.9-0.9 4.9-0.9z"/>
+    <rect x="12" y="16" width="20" height="1"/>
+    <rect x="12" y="23" width="20" height="1"/>
+    <rect x="448" y="16" width="20" height="1"/>
+    <rect x="448" y="23" width="20" height="1"/>
   </g>
 </svg>

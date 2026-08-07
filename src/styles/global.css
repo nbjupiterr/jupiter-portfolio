@@ -1,5 +1,13 @@
 @import "./tokens.css";
 
+@font-face {
+  font-family: "Treasure Times";
+  src: url("/assets/fonts/TreasureTimes.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -32,19 +40,18 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Fine geometric lattice — Art Deco underlay */
+/* Simple Art Deco lattice + soft grain — no packed ornament tiles */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.2;
+  opacity: 0.1;
   background-image:
-    url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M28 2L54 28L28 54L2 28Z' fill='none' stroke='%23a68b4b' stroke-opacity='0.4' stroke-width='0.7'/%3E%3Cpath d='M28 12L44 28L28 44L12 28Z' fill='none' stroke='%237a5c3e' stroke-opacity='0.22' stroke-width='0.6'/%3E%3Ccircle cx='28' cy='28' r='1.4' fill='%23a68b4b' fill-opacity='0.35'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  background-size: 56px 56px, 200px 200px;
-  mix-blend-mode: multiply;
+    url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M36 6L66 36L36 66L6 36Z' fill='none' stroke='%23a68b4b' stroke-opacity='0.5' stroke-width='1'/%3E%3Cpath d='M36 18L54 36L36 54L18 36Z' fill='none' stroke='%237a5c3e' stroke-opacity='0.3' stroke-width='0.8'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
+  background-size: 72px 72px, 200px 200px;
 }
 
 .app-shell {
@@ -85,9 +92,8 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 550;
-  font-optical-sizing: auto;
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   line-height: 1.12;
   margin: 0;
 }
@@ -142,11 +148,22 @@ p {
   background: linear-gradient(90deg, var(--gold-muted), transparent);
 }
 
+/* Four-pointed sparkle ✦ — not a rotated square */
+.deco-star,
 .deco-diamond {
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.45rem;
+  height: 0.45rem;
   background: var(--gold-muted);
-  transform: rotate(45deg);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
   flex: 0 0 auto;
 }
 

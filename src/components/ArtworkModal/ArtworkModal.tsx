@@ -1,7 +1,6 @@
 import { useEffect, useId, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Artwork } from "../../data/artworks";
-import { categoryMeta } from "../../data/artworks";
 import styles from "./ArtworkModal.module.css";
 
 type ArtworkModalProps = {
@@ -80,6 +79,14 @@ export function ArtworkModal({
 
   const duration = reduceMotion ? 0.12 : 0.28;
 
+  const go = (direction: -1 | 1) => {
+    if (!artwork) return;
+    const index = artworks.findIndex((item) => item.id === artwork.id);
+    if (index < 0) return;
+    const nextIndex = (index + direction + artworks.length) % artworks.length;
+    onNavigate(artworks[nextIndex]);
+  };
+
   return (
     <AnimatePresence>
       {artwork ? (
@@ -103,6 +110,10 @@ export function ArtworkModal({
             exit={reduceMotion ? undefined : { opacity: 0, y: 8 }}
             transition={{ duration, ease: [0.22, 1, 0.36, 1] }}
           >
+            <h2 id={titleId} className={styles.visuallyHidden}>
+              {artwork.title}
+            </h2>
+
             <button
               ref={closeRef}
               type="button"
@@ -113,52 +124,29 @@ export function ArtworkModal({
               Close
             </button>
 
-            <div className={styles.imageWrap}>
+            <button
+              type="button"
+              className={`${styles.nav} ${styles.prev}`}
+              onClick={() => go(-1)}
+              aria-label="Previous artwork"
+              data-cursor="link"
+            >
+              Prev
+            </button>
+
+            <figure className={styles.frame}>
               <img src={artwork.fullImage} alt={artwork.altText} />
-            </div>
+            </figure>
 
-            <div className={styles.details}>
-              <p className={styles.category}>
-                {categoryMeta[artwork.category].title}
-                {artwork.year ? ` · ${artwork.year}` : ""}
-              </p>
-              <h2 id={titleId} className={styles.title}>
-                {artwork.title}
-              </h2>
-              {artwork.description ? (
-                <p className={styles.description}>{artwork.description}</p>
-              ) : null}
-
-              <div className={styles.controls}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const index = artworks.findIndex(
-                      (item) => item.id === artwork.id,
-                    );
-                    const prev =
-                      artworks[(index - 1 + artworks.length) % artworks.length];
-                    onNavigate(prev);
-                  }}
-                  data-cursor="link"
-                >
-                  Previous
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const index = artworks.findIndex(
-                      (item) => item.id === artwork.id,
-                    );
-                    const next = artworks[(index + 1) % artworks.length];
-                    onNavigate(next);
-                  }}
-                  data-cursor="link"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
+            <button
+              type="button"
+              className={`${styles.nav} ${styles.next}`}
+              onClick={() => go(1)}
+              aria-label="Next artwork"
+              data-cursor="link"
+            >
+              Next
+            </button>
           </motion.div>
         </motion.div>
       ) : null}

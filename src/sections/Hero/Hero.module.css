@@ -8,9 +8,215 @@
   place-items: center;
   overflow: hidden;
   padding:
-    calc(var(--header-offset) + 1rem)
-    1.25rem
+    calc(var(--header-offset) + 1.25rem)
+    clamp(1.25rem, 4vw, 3rem)
     var(--progress-offset);
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 48%, rgba(196, 163, 90, 0.14), transparent 68%),
+    radial-gradient(circle at 16% 20%, rgba(111, 127, 140, 0.1), transparent 26%),
+    radial-gradient(circle at 82% 28%, rgba(196, 163, 90, 0.1), transparent 22%),
+    linear-gradient(165deg, #f7f1e7 0%, var(--ivory) 48%, #ebe2d4 100%);
+}
+
+/* Simple Art Deco lattice — CSS only, no packed ornament sheets */
+.lattice {
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background-image: url("data:image/svg+xml,%3Csvg width='72' height='72' viewBox='0 0 72 72' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M36 6L66 36L36 66L6 36Z' fill='none' stroke='%23a68b4b' stroke-opacity='0.55' stroke-width='1'/%3E%3Cpath d='M36 18L54 36L36 54L18 36Z' fill='none' stroke='%237a5c3e' stroke-opacity='0.35' stroke-width='0.8'/%3E%3Ccircle cx='36' cy='36' r='1.6' fill='%23a68b4b' fill-opacity='0.45'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
+  animation: lattice-drift 48s linear infinite;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 46%, transparent 32%, rgba(242, 235, 224, 0.5) 72%, rgba(242, 235, 224, 0.9) 100%);
+}
+
+/*
+  Clean planetary system: 3 nested ellipses, mild tilt differences.
+  Each path spins on its own speed/direction so planets clearly orbit.
+*/
+.orbits {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.orbitFrame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.orbitPath {
+  border: 1px solid rgba(166, 139, 75, 0.32);
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Shared orbital plane family — slight angle offsets only */
+.frameNear {
+  transform: translate(-50%, -52%) rotate(-12deg);
+}
+
+.frameMid {
+  transform: translate(-50%, -50%) rotate(-4deg);
+}
+
+.frameFar {
+  transform: translate(-50%, -48%) rotate(6deg);
+}
+
+.pathNear {
+  width: min(58vw, 30rem);
+  height: min(22vw, 11.5rem);
+  animation: path-spin 55s linear infinite;
+}
+
+.pathMid {
+  width: min(82vw, 44rem);
+  height: min(30vw, 16rem);
+  border-style: dashed;
+  border-color: rgba(122, 92, 62, 0.3);
+  animation: path-spin-reverse 78s linear infinite;
+}
+
+.pathFar {
+  width: min(108vw, 58rem);
+  height: min(38vw, 20.5rem);
+  border-color: rgba(166, 139, 75, 0.26);
+  animation: path-spin 110s linear infinite;
+}
+
+.planet {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin: -0.25rem 0 0 -0.25rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, #f7f1e7, var(--gold-muted) 55%, var(--bronze));
+  box-shadow: 0 0 0 1px rgba(166, 139, 75, 0.35);
+}
+
+.planetNear {
+  width: 0.42rem;
+  height: 0.42rem;
+  margin: -0.21rem 0 0 -0.21rem;
+}
+
+.planetMid {
+  top: auto;
+  bottom: 0;
+  left: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin: 0 0 -0.27rem -0.27rem;
+  background:
+    radial-gradient(circle at 30% 30%, #e8dfd0, #6f7f8c 60%, #3d4a55);
+}
+
+.planetFar {
+  left: 0;
+  top: 50%;
+  width: 0.48rem;
+  height: 0.48rem;
+  margin: -0.24rem 0 0 -0.24rem;
+}
+
+.spark {
+  position: absolute;
+  width: 0.42rem;
+  height: 0.42rem;
+  background: var(--gold-muted);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
+  opacity: 0.45;
+  animation: spark-pulse 3.6s ease-in-out infinite;
+}
+
+.sparkA {
+  top: 26%;
+  left: 18%;
+}
+
+.sparkB {
+  top: 32%;
+  right: 20%;
+  width: 0.32rem;
+  height: 0.32rem;
+  animation-delay: 0.6s;
+}
+
+.sparkC {
+  bottom: 26%;
+  left: 24%;
+  animation-delay: 1.1s;
+}
+
+.sparkD {
+  bottom: 30%;
+  right: 28%;
+  width: 0.28rem;
+  height: 0.28rem;
+  animation-delay: 1.7s;
+}
+
+.corner {
+  position: absolute;
+  width: clamp(2.4rem, 6vw, 3.8rem);
+  height: clamp(2.4rem, 6vw, 3.8rem);
+  background: url("/assets/artdeco/corner-stepped.svg") no-repeat center / contain;
+  opacity: 0.7;
+  animation: corner-breathe 5.5s ease-in-out infinite;
+}
+
+.tl {
+  top: calc(var(--header-offset) + 0.45rem);
+  left: clamp(0.85rem, 2.5vw, 1.75rem);
+}
+
+.tr {
+  top: calc(var(--header-offset) + 0.45rem);
+  right: clamp(0.85rem, 2.5vw, 1.75rem);
+  transform: scaleX(-1);
+  animation-delay: 0.4s;
+}
+
+.bl {
+  bottom: calc(var(--progress-offset) - 0.25rem);
+  left: clamp(0.85rem, 2.5vw, 1.75rem);
+  transform: scaleY(-1);
+  animation-delay: 0.8s;
+}
+
+.br {
+  bottom: calc(var(--progress-offset) - 0.25rem);
+  right: clamp(0.85rem, 2.5vw, 1.75rem);
+  transform: scale(-1);
+  animation-delay: 1.2s;
 }
 
 .content {
@@ -18,110 +224,100 @@
   z-index: 2;
   display: grid;
   justify-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
   text-align: center;
-  max-width: 48rem;
+  width: min(100%, 40rem);
   max-height: var(--content-max-height);
-  overflow: auto;
-  overscroll-behavior: contain;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 3vw, 1.75rem);
+  animation: content-rise 1.05s var(--ease-out) 0.15s both;
 }
 
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--bronze);
+.kicker {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
 }
 
-.title::before,
-.title::after {
-  content: "";
-  width: 1.6rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-muted));
+.kickerMark {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--gold-muted);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
+  animation: spark-pulse 2.8s ease-in-out infinite;
 }
 
-.title::after {
-  background: linear-gradient(90deg, var(--gold-muted), transparent);
+.midDivider {
+  width: min(100%, 18rem);
+  margin-block: 0.15rem;
+  animation: divider-glow 4.5s ease-in-out infinite;
+}
+
+.role {
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 1.7vw, 1rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bronze);
 }
 
 .support {
-  max-width: 28rem;
+  max-width: 26rem;
   color: var(--ink-soft);
-  font-size: 1.05rem;
-}
-
-.actions {
-  display: grid;
-  justify-items: center;
-  gap: 1.25rem;
-  margin-top: 0.5rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  line-height: 1.5;
 }
 
 .cta {
   position: relative;
+  margin-top: 0.55rem;
   font-family: var(--font-display);
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ivory);
   background: var(--ink);
   border: 1px solid var(--ink);
-  padding: 0.9rem 1.55rem;
+  padding: 0.95rem 1.7rem;
   box-shadow:
-    inset 0 0 0 1px rgba(196, 163, 90, 0.35),
+    inset 0 0 0 1px rgba(196, 163, 90, 0.4),
     0 0 0 1px var(--ink);
   transition:
     background var(--duration) var(--ease-out),
     color var(--duration) var(--ease-out),
-    box-shadow var(--duration) var(--ease-out);
-}
-
-.cta::before,
-.cta::after {
-  content: "";
-  position: absolute;
-  width: 0.45rem;
-  height: 0.45rem;
-  border: 1px solid var(--gold-muted);
-  pointer-events: none;
-}
-
-.cta::before {
-  top: 0.28rem;
-  left: 0.28rem;
-  border-right: 0;
-  border-bottom: 0;
-}
-
-.cta::after {
-  right: 0.28rem;
-  bottom: 0.28rem;
-  border-left: 0;
-  border-top: 0;
+    transform var(--duration) var(--ease-out);
 }
 
 .cta:hover {
   background: transparent;
   color: var(--ink);
-  box-shadow:
-    inset 0 0 0 1px rgba(166, 139, 75, 0.45),
-    0 0 0 1px var(--ink);
+  transform: translateY(-2px);
 }
 
 .scrollHint {
+  margin-top: 0.35rem;
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
   font-family: var(--font-display);
-  font-size: 0.65rem;
-  letter-spacing: 0.18em;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-muted);
+  animation: hint-pulse 2.8s ease-in-out 1.4s infinite;
 }
 
 .scrollLine {
@@ -130,122 +326,115 @@
   background: linear-gradient(90deg, transparent, var(--gold-muted));
 }
 
-.sky {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 58%, rgba(196, 163, 90, 0.16), transparent 70%),
-    radial-gradient(circle at 18% 22%, rgba(111, 127, 140, 0.14), transparent 28%),
-    radial-gradient(circle at 82% 28%, rgba(196, 163, 90, 0.12), transparent 24%);
-}
-
-/* Art Deco sunburst */
-.sky::before {
-  content: "";
-  position: absolute;
-  inset: 8% 12%;
-  opacity: 0.28;
-  background: repeating-conic-gradient(
-    from 0deg at 50% 55%,
-    rgba(196, 163, 90, 0.22) 0deg 3deg,
-    transparent 3deg 12deg
-  );
-  mask-image: radial-gradient(circle at 50% 55%, black 0%, transparent 62%);
-}
-
-.orbit,
-.orbitInner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 1px solid rgba(166, 139, 75, 0.28);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-}
-
-.orbit {
-  width: min(78vw, 42rem);
-  height: min(78vw, 42rem);
-  animation: orbit-spin 80s linear infinite;
-  box-shadow: 0 0 0 6px rgba(166, 139, 75, 0.06);
-}
-
-.orbitInner {
-  width: min(48vw, 26rem);
-  height: min(48vw, 26rem);
-  border-style: solid;
-  border-color: rgba(122, 92, 62, 0.22);
-  animation: orbit-spin-reverse 55s linear infinite;
-}
-
-.orbitInner::before,
-.orbitInner::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
-  background: var(--gold-muted);
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.orbitInner::before {
-  top: 0;
-}
-
-.orbitInner::after {
-  top: 100%;
-}
-
-@keyframes orbit-spin {
+@keyframes path-spin {
   from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes orbit-spin-reverse {
+@keyframes path-spin-reverse {
   from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translate(-50%, -50%) rotate(-360deg);
+    transform: rotate(-360deg);
   }
 }
 
-.moon {
-  position: absolute;
-  top: 18%;
-  right: 16%;
-  width: 3.5rem;
-  height: 3.5rem;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 35%, #f7f1e7, #d8cbb6 55%, #a68b4b 120%);
-  box-shadow:
-    0 0 0 1px rgba(166, 139, 75, 0.35),
-    0 0 0 5px rgba(166, 139, 75, 0.08);
+@keyframes lattice-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 72px 36px;
+  }
 }
 
-.star {
-  position: absolute;
-  width: 0.42rem;
-  height: 0.42rem;
-  background: var(--ink-soft);
-  transform: rotate(45deg);
-  opacity: 0.55;
+@keyframes spark-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15);
+  }
 }
 
-.starA { top: 28%; left: 18%; }
-.starB { top: 36%; right: 22%; width: 0.32rem; height: 0.32rem; }
-.starC { bottom: 24%; left: 26%; }
-.starD { bottom: 30%; right: 30%; width: 0.28rem; height: 0.28rem; }
+@keyframes corner-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes divider-glow {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes content-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lattice,
+  .orbitPath,
+  .spark,
+  .corner,
+  .kickerMark,
+  .midDivider,
+  .scrollHint,
+  .content {
+    animation: none !important;
+  }
+
+  .content {
+    opacity: 1;
+    transform: none;
+  }
+
+  .tr {
+    transform: scaleX(-1);
+  }
+
+  .bl {
+    transform: scaleY(-1);
+  }
+
+  .br {
+    transform: scale(-1);
+  }
+}
 
 @media (min-width: 900px) {
   .hero {

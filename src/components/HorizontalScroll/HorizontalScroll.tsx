@@ -135,6 +135,7 @@ export const HorizontalScroll = forwardRef<
     <div
       ref={scrollerRef}
       className={`${styles.scroller} ${enabled ? styles.horizontal : styles.vertical}`}
+      data-horizontal-scroller={enabled ? "true" : undefined}
     >
       <div className={styles.track}>{children}</div>
     </div>

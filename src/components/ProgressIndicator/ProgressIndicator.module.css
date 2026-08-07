@@ -32,10 +32,20 @@
   content: "";
   position: absolute;
   top: 50%;
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
   background: var(--gold-muted);
-  transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
 }
 
 .track::before {
@@ -54,12 +64,22 @@
 .star {
   position: absolute;
   top: 50%;
-  width: 0.55rem;
-  height: 0.55rem;
-  margin-top: -0.28rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  margin-top: -0.31rem;
   background: var(--ink);
-  transform: rotate(45deg);
-  box-shadow: 0 0 0 1px var(--gold-bright);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
+  outline: 1px solid var(--gold-bright);
+  outline-offset: 1px;
 }
 
 .label {
@@ -75,10 +95,19 @@
 
 .label::before {
   content: "";
-  width: 0.28rem;
-  height: 0.28rem;
+  width: 0.34rem;
+  height: 0.34rem;
   background: var(--gold-muted);
-  transform: rotate(45deg);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
 }
 
 @media (min-width: 900px) {

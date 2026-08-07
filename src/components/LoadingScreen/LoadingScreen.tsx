@@ -1,4 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { DecoDivider } from "../DecoDivider/DecoDivider";
 import { Wordmark } from "../Wordmark/Wordmark";
 import styles from "./LoadingScreen.module.css";
 
@@ -23,11 +24,14 @@ export function LoadingScreen({ visible, progress }: LoadingScreenProps) {
           aria-label="Loading portfolio"
         >
           <div className={styles.inner}>
-            <div className={`${styles.orbit} orbit-motion`} aria-hidden="true">
-              <span className={styles.ring} />
-              <span className={styles.dot} />
-            </div>
+            <img
+              className={`${styles.seal} orbit-motion`}
+              src="/assets/artdeco/sunburst-seal.svg"
+              alt=""
+              aria-hidden="true"
+            />
             <Wordmark size="section" interactive={false} />
+            <DecoDivider variant="crest" />
             <div className={styles.track} aria-hidden="true">
               <div
                 className={styles.fill}

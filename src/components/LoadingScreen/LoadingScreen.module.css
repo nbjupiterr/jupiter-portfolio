@@ -6,53 +6,43 @@
   place-items: center;
   isolation: isolate;
   background-color: #f2ebe0;
-  background-image: radial-gradient(
-    circle at 50% 40%,
-    rgba(196, 163, 90, 0.16),
-    transparent 45%
-  );
+  background-image:
+    radial-gradient(circle at 50% 40%, rgba(196, 163, 90, 0.18), transparent 48%),
+    radial-gradient(circle at 18% 22%, rgba(111, 127, 140, 0.1), transparent 28%),
+    radial-gradient(circle at 82% 28%, rgba(196, 163, 90, 0.08), transparent 24%);
+  background-size: auto;
+  background-blend-mode: normal;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(242, 235, 224, 0.88);
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-md);
+  gap: 0.85rem;
   text-align: center;
   padding: var(--space-lg);
 }
 
-.orbit {
-  position: relative;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin-bottom: var(--space-sm);
-  animation: loader-spin 8s linear infinite;
+.seal {
+  width: 5.5rem;
+  height: 5.5rem;
+  opacity: 0.75;
+  animation: loader-spin 18s linear infinite;
 }
 
 @keyframes loader-spin {
   to {
     transform: rotate(360deg);
   }
-}
-
-.ring {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--gold-muted);
-  border-radius: 50%;
-}
-
-.dot {
-  position: absolute;
-  top: -0.18rem;
-  left: 50%;
-  width: 0.38rem;
-  height: 0.38rem;
-  margin-left: -0.19rem;
-  background: var(--ink);
-  transform: rotate(45deg);
-  border-radius: 0;
 }
 
 .track {
@@ -71,10 +61,20 @@
   content: "";
   position: absolute;
   top: 50%;
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.45rem;
+  height: 0.45rem;
   background: var(--gold-muted);
-  transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
 }
 
 .track::before {
@@ -96,4 +96,10 @@
   font-size: 0.75rem;
   letter-spacing: 0.16em;
   color: var(--ink-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seal {
+    animation: none;
+  }
 }

@@ -1,15 +1,15 @@
 .frame {
   position: relative;
-  padding: 1rem;
+  padding: 1.1rem;
 }
 
 .corner {
   position: absolute;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   pointer-events: none;
-  background: url("/assets/artdeco/corner.svg") no-repeat center / contain;
-  opacity: 0.9;
+  background: url("/assets/artdeco/corner-stepped.svg") no-repeat center / contain;
+  opacity: 0.95;
 }
 
 .tl {

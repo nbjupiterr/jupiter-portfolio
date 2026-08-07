@@ -7,40 +7,72 @@ type HeroProps = {
   onExplore: () => void;
 };
 
+const orbits = [
+  { frame: styles.frameNear, path: styles.pathNear, planet: styles.planetNear },
+  { frame: styles.frameMid, path: styles.pathMid, planet: styles.planetMid },
+  { frame: styles.frameFar, path: styles.pathFar, planet: styles.planetFar },
+] as const;
+
 export function Hero({ onExplore }: HeroProps) {
   return (
     <section id="hero" className={styles.hero} aria-label="Opening">
-      <div className={styles.sky} aria-hidden="true">
-        <div className={`${styles.orbit} orbit-motion`} />
-        <div className={`${styles.orbitInner} orbit-motion`} />
-        <span className={styles.moon} />
-        <span className={`${styles.star} ${styles.starA}`} />
-        <span className={`${styles.star} ${styles.starB}`} />
-        <span className={`${styles.star} ${styles.starC}`} />
-        <span className={`${styles.star} ${styles.starD}`} />
+      <div className={styles.stage} aria-hidden="true">
+        <div className={styles.lattice} />
+        <div className={styles.vignette} />
+
+        <div className={styles.orbits}>
+          {orbits.map((orbit) => (
+            <div
+              key={orbit.frame}
+              className={`${styles.orbitFrame} ${orbit.frame}`}
+            >
+              <div className={`${styles.orbitPath} ${orbit.path}`}>
+                <span className={`${styles.planet} ${orbit.planet}`} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <span className={`${styles.spark} ${styles.sparkA}`} />
+        <span className={`${styles.spark} ${styles.sparkB}`} />
+        <span className={`${styles.spark} ${styles.sparkC}`} />
+        <span className={`${styles.spark} ${styles.sparkD}`} />
+
+        <span className={`${styles.corner} ${styles.tl}`} />
+        <span className={`${styles.corner} ${styles.tr}`} />
+        <span className={`${styles.corner} ${styles.bl}`} />
+        <span className={`${styles.corner} ${styles.br}`} />
       </div>
 
-      <div className={styles.content} data-allow-vertical-scroll="true">
-        <Wordmark as="h1" size="hero" />
-        <DecoDivider variant="diamond" />
-        <p className={styles.title}>{site.title}</p>
-        <p className={styles.support}>
-          A vintage celestial archive of illustrations, design, personal work, and commissions.
+      <div className={styles.content}>
+        <p className={styles.kicker}>
+          <span className={styles.kickerMark} />
+          Celestial Archive
+          <span className={styles.kickerMark} />
         </p>
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.cta}
-            onClick={onExplore}
-            data-cursor="link"
-          >
-            Enter the archive
-          </button>
-          <p className={styles.scrollHint} aria-hidden="true">
-            <span className={styles.scrollLine} />
-            Scroll to travel
-          </p>
-        </div>
+
+        <Wordmark as="h1" size="hero" interactive={false} />
+
+        <DecoDivider variant="diamond" className={styles.midDivider} />
+
+        <p className={styles.role}>{site.title}</p>
+        <p className={styles.support}>
+          Illustrations, design, personal studies, and commissions — gathered in one golden orbit.
+        </p>
+
+        <button
+          type="button"
+          className={styles.cta}
+          onClick={onExplore}
+          data-cursor="link"
+        >
+          Enter the archive
+        </button>
+
+        <p className={styles.scrollHint} aria-hidden="true">
+          <span className={styles.scrollLine} />
+          Scroll to travel
+        </p>
       </div>
     </section>
   );

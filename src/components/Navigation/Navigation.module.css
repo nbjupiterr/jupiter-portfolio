@@ -24,9 +24,9 @@
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 550;
-  letter-spacing: 0.04em;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
   text-transform: none;
   color: var(--ink);
 }
@@ -61,11 +61,21 @@
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 0.1rem;
-  width: 0.28rem;
-  height: 0.28rem;
+  bottom: 0.05rem;
+  width: 0.34rem;
+  height: 0.34rem;
   background: var(--gold-muted);
-  transform: translateX(-50%) rotate(45deg);
+  transform: translateX(-50%);
+  clip-path: polygon(
+    50% 0%,
+    61% 39%,
+    100% 50%,
+    61% 61%,
+    50% 100%,
+    39% 61%,
+    0% 50%,
+    39% 39%
+  );
 }
 
 .numeral {

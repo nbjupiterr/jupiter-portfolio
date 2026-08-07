@@ -5,8 +5,14 @@
   margin-block: 0.15rem 0.1rem;
 }
 
-.svg {
+.sunburst,
+.crest {
+  width: min(100%, 22rem);
+}
+
+.asset {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: contain;
 }
