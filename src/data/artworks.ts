@@ -1,4 +1,8 @@
-export type ArtworkCategory = "character" | "illustration" | "commission";
+export type ArtworkCategory =
+  | "illustration"
+  | "design"
+  | "studies"
+  | "commission";
 
 export type Artwork = {
   id: string;
@@ -52,45 +56,6 @@ const placeholder = (
 
 export const artworks: Artwork[] = [
   {
-    id: "char-01",
-    title: "Orbital Scout",
-    category: "character",
-    year: 2025,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    altText: "Placeholder character artwork titled Orbital Scout",
-    thumbnail: placeholder("Orbital Scout", "character", 28),
-    fullImage: placeholder("Orbital Scout", "character", 28),
-  },
-  {
-    id: "char-02",
-    title: "Moonlit Herald",
-    category: "character",
-    year: 2025,
-    description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    altText: "Placeholder character artwork titled Moonlit Herald",
-    thumbnail: placeholder("Moonlit Herald", "character", 210),
-    fullImage: placeholder("Moonlit Herald", "character", 210),
-  },
-  {
-    id: "char-03",
-    title: "Gilded Archivist",
-    category: "character",
-    year: 2024,
-    description: "Ut enim ad minim veniam, quis nostrud exercitation.",
-    altText: "Placeholder character artwork titled Gilded Archivist",
-    thumbnail: placeholder("Gilded Archivist", "character", 42),
-    fullImage: placeholder("Gilded Archivist", "character", 42),
-  },
-  {
-    id: "char-04",
-    title: "Starfold Twin",
-    category: "character",
-    year: 2024,
-    altText: "Placeholder character artwork titled Starfold Twin",
-    thumbnail: placeholder("Starfold Twin", "character", 330),
-    fullImage: placeholder("Starfold Twin", "character", 330),
-  },
-  {
     id: "illu-01",
     title: "Observatory Night",
     category: "illustration",
@@ -129,6 +94,64 @@ export const artworks: Artwork[] = [
     fullImage: placeholder("Atlas Unbound", "illustration", 35),
   },
   {
+    id: "des-01",
+    title: "Orbital Scout",
+    category: "design",
+    year: 2025,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    altText: "Placeholder design artwork titled Orbital Scout",
+    thumbnail: placeholder("Orbital Scout", "design", 28),
+    fullImage: placeholder("Orbital Scout", "design", 28),
+  },
+  {
+    id: "des-02",
+    title: "Moonlit Herald",
+    category: "design",
+    year: 2025,
+    description: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    altText: "Placeholder design artwork titled Moonlit Herald",
+    thumbnail: placeholder("Moonlit Herald", "design", 210),
+    fullImage: placeholder("Moonlit Herald", "design", 210),
+  },
+  {
+    id: "des-03",
+    title: "Gilded Archivist",
+    category: "design",
+    year: 2024,
+    description: "Ut enim ad minim veniam, quis nostrud exercitation.",
+    altText: "Placeholder design artwork titled Gilded Archivist",
+    thumbnail: placeholder("Gilded Archivist", "design", 42),
+    fullImage: placeholder("Gilded Archivist", "design", 42),
+  },
+  {
+    id: "stu-01",
+    title: "Starfold Twin",
+    category: "studies",
+    year: 2024,
+    altText: "Placeholder study titled Starfold Twin",
+    thumbnail: placeholder("Starfold Twin", "studies", 330),
+    fullImage: placeholder("Starfold Twin", "studies", 330),
+  },
+  {
+    id: "stu-02",
+    title: "Gesture Orbit",
+    category: "studies",
+    year: 2025,
+    description: "Lorem ipsum gesture and form study.",
+    altText: "Placeholder study titled Gesture Orbit",
+    thumbnail: placeholder("Gesture Orbit", "studies", 95),
+    fullImage: placeholder("Gesture Orbit", "studies", 95),
+  },
+  {
+    id: "stu-03",
+    title: "Value Drift",
+    category: "studies",
+    year: 2024,
+    altText: "Placeholder study titled Value Drift",
+    thumbnail: placeholder("Value Drift", "studies", 250),
+    fullImage: placeholder("Value Drift", "studies", 250),
+  },
+  {
     id: "comm-01",
     title: "Client Portrait I",
     category: "commission",
@@ -159,25 +182,38 @@ export const artworks: Artwork[] = [
   },
 ];
 
+export const categoryOrder: ArtworkCategory[] = [
+  "illustration",
+  "design",
+  "studies",
+  "commission",
+];
+
 export const categoryMeta: Record<
   ArtworkCategory,
   { id: ArtworkCategory; title: string; description: string }
 > = {
-  character: {
-    id: "character",
-    title: "Character Art",
-    description:
-      "Original character designs, expressions, outfits, and character-focused studies.",
-  },
   illustration: {
     id: "illustration",
-    title: "Illustrations",
+    title: "Illustration",
     description:
       "Finished compositions with storytelling, environments, and detailed rendering.",
   },
+  design: {
+    id: "design",
+    title: "Design",
+    description:
+      "Character and visual design work — silhouette, costume, and identity systems.",
+  },
+  studies: {
+    id: "studies",
+    title: "Studies",
+    description:
+      "Sketches, value drills, and exploratory pieces from the practice archive.",
+  },
   commission: {
     id: "commission",
-    title: "Commissions",
+    title: "Commission",
     description:
       "Selected client work demonstrating direction-following and reference interpretation.",
   },

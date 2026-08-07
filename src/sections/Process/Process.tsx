@@ -4,7 +4,7 @@ import styles from "./Process.module.css";
 
 export function Process() {
   return (
-    <SectionShell id="process" numeral="III" wide>
+    <SectionShell id="process" numeral="III">
       <div className={styles.header}>
         <p className={styles.eyebrow}>Process</p>
         <h2 id="process-title">From spark to finished sky</h2>

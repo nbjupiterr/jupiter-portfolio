@@ -6,7 +6,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  padding: calc(var(--header-offset) + 1rem) 1.25rem 4rem;
+  padding: calc(var(--header-offset) + 1rem) 1.25rem calc(var(--progress-offset) + 0.75rem);
 }
 
 .content {

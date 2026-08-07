@@ -7,7 +7,7 @@ import {
 import { LoadingScreen } from "./components/LoadingScreen/LoadingScreen";
 import { Navigation } from "./components/Navigation/Navigation";
 import { ProgressIndicator } from "./components/ProgressIndicator/ProgressIndicator";
-import { artworks, type Artwork } from "./data/artworks";
+import { artworks, artworksByCategory, type Artwork } from "./data/artworks";
 import { useMediaQuery } from "./hooks/useMediaQuery";
 import { About } from "./sections/About/About";
 import { Contact } from "./sections/Contact/Contact";
@@ -30,7 +30,9 @@ function App() {
   const [progress, setProgress] = useState(0);
   const [activeId, setActiveId] = useState("hero");
   const [selected, setSelected] = useState<Artwork | null>(null);
-  const [gallerySet, setGallerySet] = useState<Artwork[]>(artworks);
+  const [gallerySet, setGallerySet] = useState<Artwork[]>(() =>
+    artworksByCategory("illustration"),
+  );
   const [loading, setLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(12);
 

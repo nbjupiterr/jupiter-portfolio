@@ -6,7 +6,7 @@ type WordmarkProps = {
   interactive?: boolean;
 };
 
-const letters = ["J", "U", "P", "I", "T", "E", "R"];
+const letters = ["J", "u", "p", "i", "t", "e", "r"];
 
 export function Wordmark({
   as: Tag = "span",

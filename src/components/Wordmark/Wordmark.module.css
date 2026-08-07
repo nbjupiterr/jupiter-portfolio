@@ -1,11 +1,12 @@
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font-weight: 550;
+  font-optical-sizing: auto;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: var(--ink);
   margin: 0;
 }
@@ -16,7 +17,7 @@
 
 .letter {
   display: inline-block;
-  padding-inline: 0.02em;
+  padding-inline: 0.01em;
   transform: translate3d(0, 0, 0);
   transition:
     transform 0.3s var(--ease-out),
@@ -24,8 +25,8 @@
 }
 
 .ornament {
-  width: 0.45em;
-  height: 0.45em;
+  width: 0.38em;
+  height: 0.38em;
   background: var(--gold-muted);
   clip-path: polygon(
     50% 0%,
@@ -42,18 +43,20 @@
 }
 
 .hero {
-  font-size: clamp(3.2rem, 9vw, 7.5rem);
-  letter-spacing: 0.32em;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  letter-spacing: 0.01em;
 }
 
 .section {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  letter-spacing: 0.03em;
 }
 
 .compact {
-  font-size: 1.1rem;
-  letter-spacing: 0.22em;
-  gap: 0.4rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  gap: 0.35rem;
+  text-transform: none;
 }
 
 @media (hover: hover) and (pointer: fine) {

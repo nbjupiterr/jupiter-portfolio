@@ -23,6 +23,7 @@ export function SectionShell({
       id={id}
       className={`${styles.section} ${wide ? styles.wide : ""} ${scrollable ? styles.scrollable : ""} ${className}`}
       aria-labelledby={`${id}-title`}
+      {...(scrollable ? { "data-allow-vertical-scroll": "true" } : {})}
     >
       {numeral ? (
         <span className={styles.numeral} aria-hidden="true">

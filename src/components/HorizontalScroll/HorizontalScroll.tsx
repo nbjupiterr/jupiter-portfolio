@@ -91,15 +91,21 @@ export const HorizontalScroll = forwardRef<
 
         const target = event.target as HTMLElement | null;
         const nested = target?.closest<HTMLElement>(
-          '[class*="scrollable"], [data-allow-vertical-scroll="true"]',
+          '[data-allow-vertical-scroll="true"]',
         );
 
         if (nested && nested.scrollHeight > nested.clientHeight + 2) {
-          const atTop = nested.scrollTop <= 0 && event.deltaY < 0;
-          const atBottom =
-            nested.scrollTop + nested.clientHeight >= nested.scrollHeight - 1 &&
-            event.deltaY > 0;
-          if (!atTop && !atBottom) return;
+          const overflowY = getComputedStyle(nested).overflowY;
+          const canScrollNested =
+            overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay";
+
+          if (canScrollNested) {
+            const atTop = nested.scrollTop <= 0 && event.deltaY < 0;
+            const atBottom =
+              nested.scrollTop + nested.clientHeight >= nested.scrollHeight - 1 &&
+              event.deltaY > 0;
+            if (!atTop && !atBottom) return;
+          }
         }
 
         event.preventDefault();

@@ -12,7 +12,7 @@
   --dust-blue: #6f7f8c;
   --paper: #f7f1e7;
 
-  --font-display: "Cinzel", "Times New Roman", serif;
+  --font-display: "Fraunces", "Georgia", serif;
   --font-body: "Source Serif 4", "Georgia", serif;
 
   --space-xs: 0.35rem;
@@ -24,6 +24,7 @@
 
   --panel-width: 100vw;
   --header-offset: 4.5rem;
+  --progress-offset: 3.25rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 0.45s;
 
