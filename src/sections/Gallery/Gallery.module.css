@@ -363,6 +363,9 @@
   .headingChrome {
     width: 100%;
     padding-inline: clamp(1rem, 4vw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .headingBlock {
@@ -374,9 +377,24 @@
   .categoryBar {
     display: grid;
     justify-items: center;
-    gap: 0.15rem;
+    justify-content: center;
+    gap: 0.35rem;
     width: 100%;
-    max-width: 22rem;
+    max-width: none;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .mobileTabs {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .mobileCategoryTitle {
+    width: 100%;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .filters {
