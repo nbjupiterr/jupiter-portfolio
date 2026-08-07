@@ -183,13 +183,27 @@
     text-align: center;
   }
 
+  .copy {
+    width: 100%;
+    justify-items: center;
+  }
+
+  .eyebrow {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .name,
+  .realName,
+  .bio,
+  .focus {
+    text-align: center;
+    width: 100%;
+  }
+
   .focus::before {
     left: 50%;
     transform: translateX(-50%);
-  }
-
-  .copy {
-    width: 100%;
   }
 
   .media {

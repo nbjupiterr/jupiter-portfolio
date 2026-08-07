@@ -30,7 +30,7 @@
   background: transparent;
   border: 0;
   outline: none;
-  cursor: default;
+  cursor: pointer;
 }
 
 .visuallyHidden {

@@ -139,5 +139,7 @@
   .progress {
     width: min(19rem, 30vw);
     right: auto;
+    padding: 0;
+    background: none;
   }
 }

@@ -30,6 +30,8 @@ const filters = categoryOrder.map((id) => ({
   label: categoryMeta[id].title,
 }));
 
+const galleryTabNumerals = ["I", "II", "III", "IV"] as const;
+
 function getScroller() {
   return document.querySelector<HTMLElement>(
     "[data-horizontal-scroller='true']",
@@ -91,7 +93,6 @@ function preloadThumbnails(artworks: Artwork[]) {
 export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   const [filter, setFilter] = useState<ArtworkCategory>(DEFAULT_FILTER);
   const [expanded, setExpanded] = useState(false);
-  const [categoryOpen, setCategoryOpen] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [rowHoldHeight, setRowHoldHeight] = useState<number | null>(null);
   const clampScrollAfterFilter = useRef(false);
@@ -131,7 +132,6 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
 
   const handleFilter = (next: ArtworkCategory) => {
     if (next === filter) {
-      setCategoryOpen(false);
       return;
     }
     if (filterBusy.current) return;
@@ -143,7 +143,6 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
     }
     setCategoryLoading(true);
     setExpanded(false);
-    setCategoryOpen(false);
 
     const nextPieces = artworksByCategory(next);
     const toPreload = nextPieces.slice(0, previewCountFor(next));
@@ -188,48 +187,33 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
           </div>
 
           <div className={styles.categoryBar}>
-            <button
-              type="button"
-              className={styles.categoryToggle}
-              aria-expanded={categoryOpen}
-              aria-controls="gallery-category-menu"
-              onClick={() => setCategoryOpen((value) => !value)}
-              data-cursor="link"
+            <div
+              className={styles.mobileTabs}
+              role="tablist"
+              aria-label="Artwork categories"
             >
-              {categoryOpen ? "Close" : categoryMeta[filter].title}
-            </button>
-            <AnimatePresence>
-              {categoryOpen ? (
-                <motion.div
-                  id="gallery-category-menu"
-                  className={styles.categoryMenu}
-                  role="tablist"
-                  aria-label="Artwork categories"
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: reduceMotion ? 0.12 : 0.22 }}
-                >
-                  {filters.map((item) => {
-                    const active = filter === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        role="tab"
-                        aria-selected={active}
-                        className={`${styles.categoryOption} ${active ? styles.categoryOptionActive : ""}`}
-                        disabled={categoryLoading}
-                        onClick={() => handleFilter(item.id)}
-                        data-cursor="link"
-                      >
-                        {item.label}
-                      </button>
-                    );
-                  })}
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
+              {filters.map((item, index) => {
+                const active = filter === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-label={item.label}
+                    className={`${styles.mobileTab} ${active ? styles.mobileTabActive : ""}`}
+                    disabled={categoryLoading}
+                    onClick={() => handleFilter(item.id)}
+                    data-cursor="link"
+                  >
+                    {galleryTabNumerals[index]}
+                  </button>
+                );
+              })}
+            </div>
+            <p className={styles.mobileCategoryTitle} aria-live="polite">
+              {categoryMeta[filter].title}
+            </p>
           </div>
 
           <div

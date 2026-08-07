@@ -134,7 +134,7 @@
 }
 
 .filter:disabled,
-.categoryOption:disabled {
+.mobileTab:disabled {
   opacity: 0.5;
   cursor: wait;
 }
@@ -205,51 +205,56 @@
 
 .categoryBar {
   display: none;
-  position: relative;
   width: 100%;
 }
 
-.categoryToggle {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink);
-  border-bottom: 1px solid var(--gold-muted);
-  padding-bottom: 0.15rem;
-}
-
-.categoryMenu {
-  position: absolute;
-  top: calc(100% + 0.35rem);
-  left: 0;
-  right: 0;
-  z-index: 12;
-  display: grid;
-  gap: 0.15rem;
-  padding: 0.65rem 0.85rem 0.85rem;
-  background: rgba(242, 235, 224, 0.98);
-  border: 1px solid var(--ivory-shadow);
-  box-shadow: 0 12px 28px rgba(26, 22, 18, 0.08);
-}
-
-.categoryOption {
+.mobileTabs {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
   width: 100%;
-  padding: 0.65rem 0.2rem;
+}
+
+.mobileTab {
+  min-width: 2.35rem;
+  padding: 0.45rem 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border: 1px solid var(--deco-line-strong);
+  background: rgba(247, 241, 231, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(242, 235, 224, 0.65);
+  transition:
+    color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    background var(--duration) var(--ease-out);
+}
+
+.mobileTab:hover {
+  color: var(--ink);
+  border-color: var(--gold-muted);
+}
+
+.mobileTabActive {
+  color: var(--ink);
+  border-color: var(--gold);
+  background: rgba(242, 235, 224, 0.95);
+  box-shadow:
+    inset 0 0 0 1px rgba(196, 163, 90, 0.25),
+    0 0 0 1px rgba(196, 163, 90, 0.12);
+}
+
+.mobileCategoryTitle {
+  margin: 0.35rem 0 0;
   font-family: var(--font-display);
   font-size: 0.82rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  text-align: left;
-  color: var(--ink-soft);
-  border-bottom: 1px solid rgba(166, 139, 75, 0.2);
-}
-
-.categoryOptionActive {
-  color: var(--ink);
-  border-bottom-color: var(--gold);
+  text-align: center;
+  color: var(--gold-deep);
 }
 
 /* Single horizontal strip — never wrap */
@@ -357,22 +362,11 @@
   }
 
   .categoryBar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    justify-items: center;
+    gap: 0.15rem;
     width: 100%;
     max-width: 22rem;
-  }
-
-  .categoryToggle {
-    text-align: center;
-  }
-
-  .categoryMenu {
-    left: 50%;
-    right: auto;
-    width: min(100%, 22rem);
-    transform: translateX(-50%);
   }
 
   .filters {

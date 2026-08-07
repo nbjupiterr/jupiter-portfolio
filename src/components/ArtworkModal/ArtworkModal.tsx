@@ -87,7 +87,6 @@ export function ArtworkModal({
             aria-modal="true"
             aria-labelledby={titleId}
             tabIndex={-1}
-            onClick={(event) => event.stopPropagation()}
             initial={motionInitial}
             animate={motionAnimate}
             exit={motionExit}
