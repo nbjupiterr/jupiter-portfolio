@@ -2,9 +2,11 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useRef,
   type ReactNode,
 } from "react";
+import { ScrollRootContext } from "../../hooks/useScrollRoot";
 import styles from "./HorizontalScroll.module.css";
 
 type HorizontalScrollProps = {
@@ -131,13 +133,20 @@ export const HorizontalScroll = forwardRef<
     };
   }, [enabled, onScrollProgress]);
 
+  const scrollRoot = useMemo(
+    () => (enabled ? scrollerRef : null),
+    [enabled],
+  );
+
   return (
-    <div
-      ref={scrollerRef}
-      className={`${styles.scroller} ${enabled ? styles.horizontal : styles.vertical}`}
-      data-horizontal-scroller={enabled ? "true" : undefined}
-    >
-      <div className={styles.track}>{children}</div>
-    </div>
+    <ScrollRootContext.Provider value={scrollRoot}>
+      <div
+        ref={scrollerRef}
+        className={`${styles.scroller} ${enabled ? styles.horizontal : styles.vertical}`}
+        data-horizontal-scroller={enabled ? "true" : undefined}
+      >
+        <div className={styles.track}>{children}</div>
+      </div>
+    </ScrollRootContext.Provider>
   );
 });

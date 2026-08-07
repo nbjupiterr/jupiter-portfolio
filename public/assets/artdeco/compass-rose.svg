@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <g stroke="#c9a84d" stroke-linecap="square" stroke-linejoin="miter">
+    <circle cx="100" cy="100" r="92" stroke-width="1.2"/>
+    <circle cx="100" cy="100" r="78" stroke-width="0.9" stroke-opacity="0.7"/>
+    <circle cx="100" cy="100" r="18" stroke-width="1.1"/>
+    <!-- cardinal points -->
+    <path d="M100 14 L108 72 L100 64 L92 72 Z" fill="#c9a84d" stroke="none"/>
+    <path d="M100 186 L108 128 L100 136 L92 128 Z" fill="#c9a84d" stroke="none" fill-opacity="0.75"/>
+    <path d="M14 100 L72 108 L64 100 L72 92 Z" fill="#c9a84d" stroke="none" fill-opacity="0.85"/>
+    <path d="M186 100 L128 108 L136 100 L128 92 Z" fill="#c9a84d" stroke="none" fill-opacity="0.85"/>
+    <!-- ordinal diamonds -->
+    <path d="M100 100 L138 62 L100 54 L62 62 Z" stroke-width="1"/>
+    <path d="M100 100 L138 138 L100 146 L62 138 Z" stroke-width="1"/>
+    <path d="M100 100 L62 62 L54 100 L62 138 Z" stroke-width="1"/>
+    <path d="M100 100 L138 62 L146 100 L138 138 Z" stroke-width="1"/>
+    <!-- ticks -->
+    <path d="M100 28v10M100 162v10M28 100h10M162 100h10" stroke-width="1.1"/>
+    <path d="M45 45l7 7M148 148l7 7M155 45l-7 7M45 155l7-7" stroke-width="1"/>
+    <circle cx="100" cy="100" r="4" fill="#c9a84d" stroke="none"/>
+  </g>
+</svg>

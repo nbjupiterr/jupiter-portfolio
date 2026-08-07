@@ -1,3 +1,4 @@
+import { CelestialClock } from "../../components/CelestialClock/CelestialClock";
 import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { site } from "../../data/site";
@@ -19,6 +20,39 @@ export function Hero({ onExplore }: HeroProps) {
       <div className={styles.stage} aria-hidden="true">
         <div className={styles.lattice} />
         <div className={styles.vignette} />
+
+        <img
+          className={`${styles.ornament} ${styles.sunburst}`}
+          src="/assets/artdeco/sunburst-rays.svg"
+          alt=""
+        />
+        <CelestialClock className={styles.clock} />
+
+        <img
+          className={`${styles.ornament} ${styles.compassL}`}
+          src="/assets/artdeco/compass-rose.svg"
+          alt=""
+        />
+        <img
+          className={`${styles.ornament} ${styles.compassR}`}
+          src="/assets/artdeco/compass-rose.svg"
+          alt=""
+        />
+        <img
+          className={`${styles.ornament} ${styles.alchemy}`}
+          src="/assets/artdeco/alchemy-seal.svg"
+          alt=""
+        />
+        <img
+          className={`${styles.ornament} ${styles.burstA}`}
+          src="/assets/artdeco/starburst.svg"
+          alt=""
+        />
+        <img
+          className={`${styles.ornament} ${styles.burstB}`}
+          src="/assets/artdeco/starburst.svg"
+          alt=""
+        />
 
         <div className={styles.orbits}>
           {orbits.map((orbit) => (

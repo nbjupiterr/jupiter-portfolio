@@ -26,12 +26,12 @@ export function LoadingScreen({ visible, progress }: LoadingScreenProps) {
           <div className={styles.inner}>
             <img
               className={`${styles.seal} orbit-motion`}
-              src="/assets/artdeco/sunburst-seal.svg"
+              src="/assets/artdeco/star.svg"
               alt=""
               aria-hidden="true"
             />
             <Wordmark size="section" interactive={false} />
-            <DecoDivider variant="crest" />
+            <DecoDivider variant="diamond" />
             <div className={styles.track} aria-hidden="true">
               <div
                 className={styles.fill}

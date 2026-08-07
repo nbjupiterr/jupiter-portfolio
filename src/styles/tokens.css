@@ -5,14 +5,14 @@
   --ink: #1a1612;
   --ink-soft: #3d342c;
   --ink-muted: #6b5f52;
-  --gold: #c4a35a;
-  --gold-bright: #d4b96a;
-  --gold-muted: #a68b4b;
+  --gold: #c9a84d;
+  --gold-bright: #e0c36a;
+  --gold-muted: #b8953f;
   --bronze: #7a5c3e;
   --dust-blue: #6f7f8c;
   --paper: #f7f1e7;
-  --deco-line: rgba(166, 139, 75, 0.45);
-  --deco-line-strong: rgba(122, 92, 62, 0.55);
+  --deco-line: rgba(201, 168, 77, 0.55);
+  --deco-line-strong: rgba(184, 149, 63, 0.7);
 
   --font-display: "Treasure Times", "Fraunces", "Georgia", serif;
   --font-body: "Source Serif 4", "Georgia", serif;

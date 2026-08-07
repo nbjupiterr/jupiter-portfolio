@@ -17,6 +17,14 @@ Use real source assets from `assets/artdeco` (`.ai` / `.eps` renders under `publ
 
 Hero and site background should layer those real ornament sheets + pattern tiles with soft celestial orbits — not empty gradients alone, and not marketing previews.
 
+## Forbidden ornaments (do not reintroduce)
+Never use these in UI dividers/section chrome — user rejected them repeatedly:
+- `divider-sunburst.svg` / `DecoDivider variant="sunburst"`
+- `sunburst-seal.svg`
+- `alchemy-seal.svg` as a Contact/section badge
+
+Prefer `diamond` or `crest` dividers only.
+
 ## Gallery
 Gallery frames should match Process-scale sizing and hang in an exact **2-row** museum wall (`grid-template-rows: repeat(2, auto)` + `grid-auto-flow: column`). Artwork modal is image-only overview — no description sidebar.
 

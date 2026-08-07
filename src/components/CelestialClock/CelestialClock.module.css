@@ -1,0 +1,60 @@
+.clock {
+  color: var(--gold);
+  pointer-events: none;
+  user-select: none;
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.hourHand,
+.minuteHand,
+.secondHand {
+  transform-box: view-box;
+  transform-origin: 120px 120px;
+}
+
+.hourHand {
+  animation: hand-spin 72s linear infinite;
+}
+
+.minuteHand {
+  animation: hand-spin 14s linear infinite;
+  animation-delay: -3s;
+}
+
+.secondHand {
+  animation: hand-spin 9s linear infinite;
+  animation-delay: -1.5s;
+}
+
+@keyframes hand-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hourHand,
+  .minuteHand,
+  .secondHand {
+    animation: none;
+    will-change: auto;
+  }
+
+  .hourHand {
+    transform: rotate(-35deg);
+  }
+
+  .minuteHand {
+    transform: rotate(70deg);
+  }
+
+  .secondHand {
+    transform: rotate(155deg);
+  }
+}

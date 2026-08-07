@@ -43,6 +43,84 @@
     radial-gradient(circle at 50% 46%, transparent 32%, rgba(242, 235, 224, 0.5) 72%, rgba(242, 235, 224, 0.9) 100%);
 }
 
+/* Gold line-art ornaments — celestial / occult / deco */
+.ornament {
+  position: absolute;
+  opacity: 0.42;
+  pointer-events: none;
+  user-select: none;
+}
+
+.sunburst {
+  top: 50%;
+  left: 50%;
+  width: min(92vw, 38rem);
+  height: min(92vw, 38rem);
+  transform: translate(-50%, -52%);
+  opacity: 0.28;
+  animation: sun-drift 90s linear infinite;
+}
+
+.clock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(58vw, 22rem);
+  height: min(58vw, 22rem);
+  transform: translate(-50%, -54%);
+  opacity: 0.55;
+  color: var(--gold);
+}
+
+.compassL,
+.compassR {
+  width: clamp(4.5rem, 11vw, 7.5rem);
+  height: clamp(4.5rem, 11vw, 7.5rem);
+  opacity: 0.48;
+  animation: ornament-float 12s ease-in-out infinite;
+}
+
+.compassL {
+  top: 18%;
+  left: clamp(1rem, 5vw, 4rem);
+}
+
+.compassR {
+  bottom: 18%;
+  right: clamp(1rem, 5vw, 4rem);
+  animation-delay: -4s;
+  transform: scaleX(-1);
+}
+
+.alchemy {
+  width: clamp(3.2rem, 8vw, 5.2rem);
+  height: clamp(3.2rem, 8vw, 5.2rem);
+  top: 22%;
+  right: clamp(2rem, 12vw, 8rem);
+  opacity: 0.5;
+  animation: ornament-float 14s ease-in-out -2s infinite;
+}
+
+.burstA,
+.burstB {
+  width: clamp(2rem, 4.5vw, 3.2rem);
+  height: clamp(2rem, 4.5vw, 3.2rem);
+  opacity: 0.55;
+  animation: spark-pulse 4.2s ease-in-out infinite;
+}
+
+.burstA {
+  bottom: 24%;
+  left: clamp(2.5rem, 14vw, 9rem);
+}
+
+.burstB {
+  top: 28%;
+  left: 42%;
+  animation-delay: 1.4s;
+  opacity: 0.22;
+}
+
 /*
   Clean planetary system: 3 nested ellipses, mild tilt differences.
   Each path spins on its own speed/direction so planets clearly orbit.
@@ -406,6 +484,27 @@
   }
 }
 
+@keyframes sun-drift {
+  from {
+    transform: translate(-50%, -52%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -52%) rotate(360deg);
+  }
+}
+
+@keyframes ornament-float {
+  0%,
+  100% {
+    opacity: 0.26;
+    translate: 0 0;
+  }
+  50% {
+    opacity: 0.4;
+    translate: 0 -0.35rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lattice,
   .orbitPath,
@@ -414,7 +513,13 @@
   .kickerMark,
   .midDivider,
   .scrollHint,
-  .content {
+  .content,
+  .sunburst,
+  .compassL,
+  .compassR,
+  .alchemy,
+  .burstA,
+  .burstB {
     animation: none !important;
   }
 

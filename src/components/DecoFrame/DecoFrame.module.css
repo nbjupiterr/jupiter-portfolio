@@ -1,15 +1,33 @@
 .frame {
   position: relative;
-  padding: 1.1rem;
+  padding: 1.15rem;
+}
+
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0.55rem;
+  border: 1px solid var(--deco-line);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  inset: 0.75rem;
+  border: 1px solid rgba(166, 139, 75, 0.22);
+  pointer-events: none;
 }
 
 .corner {
   position: absolute;
-  width: 2rem;
-  height: 2rem;
+  width: 2.15rem;
+  height: 2.15rem;
   pointer-events: none;
   background: url("/assets/artdeco/corner-stepped.svg") no-repeat center / contain;
   opacity: 0.95;
+  z-index: 1;
 }
 
 .tl {

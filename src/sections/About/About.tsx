@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { DecoDivider } from "../../components/DecoDivider/DecoDivider";
-import { Reveal } from "../../components/Reveal/Reveal";
+import { RevealGroup, RevealItem } from "../../components/Reveal/Reveal";
 import { SectionShell } from "../../components/SectionShell/SectionShell";
 import { site } from "../../data/site";
 import styles from "./About.module.css";
@@ -54,8 +54,8 @@ export function About() {
 
   return (
     <SectionShell id="about" numeral="II">
-      <div className={styles.layout}>
-        <Reveal className={styles.copy} x={-24} y={0}>
+      <RevealGroup className={styles.layout} stagger={0.18} amount="some">
+        <RevealItem className={styles.copy} x={-28} y={0}>
           <p className={styles.eyebrow}>About</p>
           <h2 id="about-title" className={styles.name}>
             {site.name}
@@ -63,9 +63,9 @@ export function About() {
           <DecoDivider variant="crest" />
           <p className={styles.bio}>{site.bio}</p>
           <p className={styles.focus}>{site.focus}</p>
-        </Reveal>
+        </RevealItem>
 
-        <Reveal className={styles.media} delay={0.12} x={24} y={0}>
+        <RevealItem className={styles.media} x={28} y={0}>
           <div className={styles.videoShell}>
             <span className={`${styles.corner} ${styles.tl}`} aria-hidden="true" />
             <span className={`${styles.corner} ${styles.tr}`} aria-hidden="true" />
@@ -94,8 +94,8 @@ export function About() {
             </div>
           </div>
           <p className={styles.caption}>Process timelapse</p>
-        </Reveal>
-      </div>
+        </RevealItem>
+      </RevealGroup>
     </SectionShell>
   );
 }
