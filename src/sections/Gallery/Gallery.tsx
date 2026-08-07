@@ -130,6 +130,10 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
           <div className={styles.headingBlock}>
             <p className={styles.eyebrow}>Art Archive</p>
             <h2 id="gallery-title">Gallery</h2>
+            <p className={styles.lede}>
+              I&apos;m most comfortable with painterly and sketchy styles, but I
+              also enjoy adapting to different looks I&apos;m interested in studying.
+            </p>
             <DecoDivider variant="crest" />
           </div>
 

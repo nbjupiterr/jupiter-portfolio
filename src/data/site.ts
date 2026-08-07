@@ -1,7 +1,8 @@
 export const site = {
   name: "Jupiter",
   realName: "Gennievieve C. Begonia",
-  title: "Artist",
+  title: "Artist Portfolio",
+  email: "begonia.gennievieve.cerafica@gmail.com",
   linktree: "https://linktr.ee/nb.jupiterr",
   bio: `I'm a self-taught artist from Metro Manila, Philippines, currently studying BS Information Technology at Quezon City University. I started with traditional art in 2018, then moved into digital drawing in 2021 — and I've been hooked on designing characters and illustrations ever since.`,
   focus:

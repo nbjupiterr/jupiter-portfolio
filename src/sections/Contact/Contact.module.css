@@ -84,3 +84,30 @@
   border-bottom: 1px solid rgba(166, 139, 75, 0.5);
   padding-bottom: 0.15rem;
 }
+
+.email {
+  display: inline-grid;
+  place-items: center;
+  margin-top: 0.15rem;
+  width: 2.65rem;
+  height: 2.65rem;
+  text-decoration: none;
+  color: var(--gold);
+  border: 1px solid var(--deco-line-strong);
+  transition:
+    color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    background var(--duration) var(--ease-out);
+}
+
+.emailIcon {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: block;
+}
+
+.email:hover {
+  color: var(--ink);
+  border-color: var(--gold);
+  background: rgba(196, 163, 90, 0.1);
+}

@@ -13,7 +13,7 @@ export function Process() {
           <p className={styles.eyebrow}>Process</p>
           <h2 id="process-title">From sketch to render</h2>
           <p className={styles.lede}>
-            Stages of a single piece — line, color, light, and finish.
+            Sketch, color, shadow drafting, and rendering.
           </p>
           <DecoDivider variant="diamond" />
         </RevealItem>

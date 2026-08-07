@@ -70,6 +70,13 @@
   font-weight: 500;
 }
 
+.lede {
+  max-width: 28rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;

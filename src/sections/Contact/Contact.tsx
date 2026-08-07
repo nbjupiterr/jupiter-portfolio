@@ -46,6 +46,38 @@ export function Contact({ onBackToStart }: ContactProps) {
             Back to start
           </button>
         </RevealItem>
+        <RevealItem>
+          <a
+            className={styles.email}
+            href={`mailto:${site.email}`}
+            aria-label={`Email ${site.email}`}
+            data-cursor="link"
+          >
+            <svg
+              className={styles.emailIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="3"
+                y="5.5"
+                width="18"
+                height="13"
+                rx="1.2"
+                stroke="currentColor"
+                strokeWidth="1.35"
+              />
+              <path
+                d="M3.5 6.5 L12 12.25 L20.5 6.5"
+                stroke="currentColor"
+                strokeWidth="1.35"
+                strokeLinecap="square"
+                strokeLinejoin="miter"
+              />
+            </svg>
+          </a>
+        </RevealItem>
       </RevealGroup>
     </SectionShell>
   );

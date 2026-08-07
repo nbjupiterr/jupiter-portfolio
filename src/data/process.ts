@@ -11,7 +11,7 @@ export const processStages: ProcessStage[] = [
     id: "sketch",
     title: "Sketch",
     description:
-      "Line exploration to lock pose, proportion, and flow before color.",
+      "Brainstorming the concept and sketching the base before color.",
     accent: "#a68b4b",
     image: "/assets/process/sketch.jpg",
   },
@@ -19,7 +19,7 @@ export const processStages: ProcessStage[] = [
     id: "base",
     title: "Base Colors",
     description:
-      "Color blocking for temperature, material read, and early atmosphere.",
+      "Color blocking for base colors — no shadows or lighting yet.",
     accent: "#c4a35a",
     image: "/assets/process/base-color.jpg",
   },
@@ -27,15 +27,14 @@ export const processStages: ProcessStage[] = [
     id: "light",
     title: "Light & Shadow",
     description:
-      "Value pass that shapes form, depth, and the scene’s lighting story.",
+      "Value drafting — placing shadow and light, then adjusting until it feels right.",
     accent: "#7a5c3e",
     image: "/assets/process/light-and-shadow.jpg",
   },
   {
     id: "render",
     title: "Render",
-    description:
-      "Final polish — edges, texture, and finishing celestial detail.",
+    description: "Detailing and polishing the final piece.",
     accent: "#3d342c",
     image: "/assets/process/render.jpg",
   },
