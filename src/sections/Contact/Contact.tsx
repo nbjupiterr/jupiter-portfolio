@@ -16,7 +16,7 @@ export function Contact({ onBackToStart }: ContactProps) {
         <RevealItem className={styles.wordmarkWrap}>
           <Wordmark size="section" />
         </RevealItem>
-        <RevealItem>
+        <RevealItem className={styles.dividerWrap}>
           <DecoDivider variant="diamond" />
         </RevealItem>
         <h2 id="contact-title" className={styles.visuallyHidden}>

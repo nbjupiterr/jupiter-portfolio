@@ -69,7 +69,7 @@ export function Navigation({ activeId, onNavigate }: NavigationProps) {
               <button
                 key={item.id}
                 type="button"
-                className={`${styles.mobileLink} ${activeId === item.id ? styles.active : ""}`}
+                className={styles.mobileLink}
                 onClick={() => handleNavigate(item.id)}
               >
                 <span>{item.numeral}</span>

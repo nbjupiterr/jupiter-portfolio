@@ -78,19 +78,26 @@ function App() {
     setActiveId(id);
   }, []);
 
-  const scrollToSection = useCallback((id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
+  const scrollToSection = useCallback(
+    (id: string) => {
+      const target = document.getElementById(id);
+      if (!target) return;
 
-    const container = scrollRef.current?.element;
-    if (container && container.scrollWidth > container.clientWidth + 2) {
-      const align = id === "gallery" ? "start" : "center";
-      scrollPanelToSection(container, target, "smooth", align);
-      return;
-    }
+      const container = scrollRef.current?.element;
+      if (
+        isDesktop &&
+        container &&
+        container.scrollWidth > container.clientWidth + 2
+      ) {
+        const align = id === "gallery" ? "start" : "center";
+        scrollPanelToSection(container, target, "smooth", align);
+        return;
+      }
 
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    },
+    [isDesktop],
+  );
 
   const navActiveId = activeId === "hero" ? "" : activeId;
 

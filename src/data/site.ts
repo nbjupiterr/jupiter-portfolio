@@ -4,7 +4,7 @@ export const site = {
   title: "Artist Portfolio",
   email: "begonia.gennievieve.cerafica@gmail.com",
   linktree: "https://linktr.ee/nb.jupiterr",
-  bio: `I'm a self-taught artist from Quezon City, Philippines, currently studying BS Information Technology at Quezon City University. I started with traditional art in 2018, then moved into digital drawing in 2021 — and I've been hooked on designing characters and illustrations ever since.`,
+  bio: `I'm a self-taught artist from Quezon City, Philippines. I am currently studying BS Information Technology at Quezon City University. I started with traditional art in 2018, then moved into digital drawing in 2021 — and I've been hooked on designing characters and illustrations ever since.`,
   focus:
     "Tools: Procreate, Ibis Paint, MediBang, and Clip Studio Paint",
   closing:

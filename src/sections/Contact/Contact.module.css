@@ -3,8 +3,24 @@
   justify-items: center;
   text-align: center;
   gap: 1.1rem;
+  width: min(100%, 36rem);
   max-width: 36rem;
   margin-inline: auto;
+}
+
+.wordmarkWrap,
+.dividerWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.layout > * {
+  justify-self: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .visuallyHidden {
@@ -110,20 +126,4 @@
   color: var(--ink);
   border-color: var(--gold);
   background: rgba(196, 163, 90, 0.1);
-}
-
-@media (max-width: 899px) {
-  .wordmarkWrap {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .layout > * {
-    justify-self: center;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 }
