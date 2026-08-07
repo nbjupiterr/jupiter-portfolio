@@ -3,9 +3,9 @@ export const site = {
   realName: "Gennievieve C. Begonia",
   title: "Artist",
   linktree: "https://linktr.ee/nb.jupiterr",
-  bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.`,
+  bio: `I'm a self-taught artist from Metro Manila, Philippines, currently studying BS Information Technology at Quezon City University. I started with traditional art in 2018, then moved into digital drawing in 2021 — and I've been hooked on designing characters and illustrations ever since.`,
   focus:
-    "Character design, narrative illustration, and commissioned visual storytelling.",
+    "Tools: Procreate, Ibis Paint, MediBang, and Clip Studio Paint",
   closing:
     "Thank you for walking through the archive. Find commissions, socials, and updates on Linktree.",
 } as const;

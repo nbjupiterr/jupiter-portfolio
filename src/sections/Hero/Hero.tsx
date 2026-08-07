@@ -70,12 +70,6 @@ export function Hero({ onExplore }: HeroProps) {
       </div>
 
       <div className={styles.content}>
-        <p className={styles.kicker}>
-          <span className={styles.kickerMark} />
-          Portfolio
-          <span className={styles.kickerMark} />
-        </p>
-
         <Wordmark as="h1" size="hero" interactive={false} />
 
         <p className={styles.role}>{site.title}</p>
