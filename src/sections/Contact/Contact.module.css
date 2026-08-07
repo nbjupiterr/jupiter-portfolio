@@ -111,3 +111,19 @@
   border-color: var(--gold);
   background: rgba(196, 163, 90, 0.1);
 }
+
+@media (max-width: 899px) {
+  .wordmarkWrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .layout > * {
+    justify-self: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

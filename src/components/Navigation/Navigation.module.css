@@ -106,6 +106,10 @@
   border-bottom: 1px solid var(--ivory-shadow);
 }
 
+.mobileLink:last-child {
+  border-bottom: 0;
+}
+
 .mobileLink {
   display: flex;
   align-items: center;

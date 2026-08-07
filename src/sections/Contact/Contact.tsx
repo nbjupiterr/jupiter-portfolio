@@ -13,7 +13,7 @@ export function Contact({ onBackToStart }: ContactProps) {
   return (
     <SectionShell id="contact" numeral="V">
       <RevealGroup className={styles.layout} stagger={0.11}>
-        <RevealItem>
+        <RevealItem className={styles.wordmarkWrap}>
           <Wordmark size="section" />
         </RevealItem>
         <RevealItem>

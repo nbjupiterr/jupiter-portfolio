@@ -175,7 +175,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
   return (
     <SectionShell id="gallery" numeral="IV" fluid className={styles.shell}>
       <div className={styles.layout} ref={layoutRef}>
-        <div className={styles.stickyChrome}>
+        <div className={styles.introColumn}>
           <div className={styles.headingBlock}>
             <p className={styles.eyebrow}>Art Archive</p>
             <h2 id="gallery-title">Gallery</h2>
@@ -215,9 +215,11 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
               {categoryMeta[filter].title}
             </p>
           </div>
+        </div>
 
+        <div className={styles.scrollColumn}>
           <div
-            className={styles.filters}
+            className={styles.stickyTabs}
             role="tablist"
             aria-label="Artwork categories"
           >
@@ -240,7 +242,6 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
               );
             })}
           </div>
-        </div>
 
         <div
           className={styles.rowShell}
@@ -320,6 +321,7 @@ export function Gallery({ onSelect, onFilterChange }: GalleryProps) {
               </motion.button>
             ) : null}
           </AnimatePresence>
+        </div>
         </div>
         </div>
       </div>

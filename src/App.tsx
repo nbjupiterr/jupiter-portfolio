@@ -84,7 +84,8 @@ function App() {
 
     const container = scrollRef.current?.element;
     if (container && container.scrollWidth > container.clientWidth + 2) {
-      scrollPanelToSection(container, target, "smooth");
+      const align = id === "gallery" ? "start" : "center";
+      scrollPanelToSection(container, target, "smooth", align);
       return;
     }
 

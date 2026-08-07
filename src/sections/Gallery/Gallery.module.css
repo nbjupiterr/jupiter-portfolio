@@ -1,42 +1,41 @@
 .shell {
-  align-items: center;
+  align-items: flex-start;
 }
 
 /*
-  Column layout: sticky chrome does NOT participate in row width math.
-  (flex-wrap + 100vw chrome was doubling section width → giant gap before Contact,
-  and wrapping the 4th card onto a clipped second line.)
+  Intro column sticks on horizontal scroll; tabs + artwork scroll together.
 */
 .layout {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   width: max-content;
   min-width: 100vw;
   gap: 0.55rem;
 }
 
-.stickyChrome {
-  position: sticky;
-  left: 0;
-  z-index: 8;
-  width: 100vw;
+.introColumn {
+  width: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: end;
-  justify-content: space-between;
-  gap: 0.65rem 2rem;
-  padding:
-    0.2rem
-    clamp(1.25rem, 4vw, 3.5rem)
-    0.35rem;
-  background: transparent;
-  pointer-events: none;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
 }
 
-.stickyChrome > * {
-  pointer-events: auto;
+.scrollColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: max-content;
+  min-width: 0;
+}
+
+.stickyTabs {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.45rem 1.1rem;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  box-sizing: border-box;
 }
 
 .headingBlock {
@@ -78,15 +77,7 @@
 }
 
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  margin-left: auto;
-  gap: 0.45rem 1.1rem;
-  padding: 0;
-  border: 0;
-  background: none;
-  box-shadow: none;
+  display: none;
 }
 
 .filter {
@@ -333,6 +324,47 @@
   }
 }
 
+@media (min-width: 900px) {
+  .layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .introColumn {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    flex: 0 0 min(36vw, 26rem);
+    width: min(36vw, 26rem);
+    max-width: 26rem;
+    padding-top: 0.15rem;
+    padding-bottom: 0.75rem;
+    background: linear-gradient(
+      90deg,
+      rgba(247, 241, 231, 0.98) 72%,
+      rgba(247, 241, 231, 0.55) 88%,
+      transparent 100%
+    );
+  }
+
+  .scrollColumn {
+    flex: 0 0 auto;
+    padding-top: 0.15rem;
+  }
+
+  .stickyTabs {
+    display: flex;
+    width: max-content;
+    min-width: calc(100vw - min(36vw, 26rem));
+    padding-bottom: 0.15rem;
+  }
+
+  .categoryBar {
+    display: none;
+  }
+}
+
 @media (max-width: 899px) {
   .shell {
     align-items: center;
@@ -344,15 +376,16 @@
     align-items: center;
   }
 
-  .stickyChrome {
-    position: relative;
-    top: auto;
-    left: auto;
+  .introColumn {
+    padding-inline: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .scrollColumn {
     width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.65rem;
-    padding-bottom: 0.15rem;
+  }
+
+  .stickyTabs {
+    display: none;
   }
 
   .headingBlock {
