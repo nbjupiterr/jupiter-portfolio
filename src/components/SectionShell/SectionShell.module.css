@@ -78,6 +78,8 @@
     min-height: 100dvh;
     max-height: 100dvh;
     overflow: hidden;
+    content-visibility: auto;
+    contain-intrinsic-size: auto var(--panel-width) 100dvh;
   }
 
   .wide {
@@ -95,6 +97,9 @@
     padding-inline: 0;
     /* Sticky gallery tabs need a visible overflow chain to the scroller */
     overflow: visible;
+    /* Fluid gallery width must stay measured — skip content-visibility */
+    content-visibility: visible;
+    contain-intrinsic-size: none;
   }
 
   .fluid .inner {

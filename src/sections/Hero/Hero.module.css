@@ -7,6 +7,8 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 100vw 100dvh;
   padding:
     calc(var(--header-offset) + 1.25rem)
     clamp(1.25rem, 4vw, 3rem)
@@ -141,7 +143,6 @@
 .orbitPath {
   border: 1px solid rgba(166, 139, 75, 0.32);
   border-radius: 50%;
-  will-change: transform;
 }
 
 /* Shared orbital plane family — slight angle offsets only */
@@ -503,6 +504,16 @@
     opacity: 0.4;
     translate: 0 -0.35rem;
   }
+}
+
+/* Freeze decorative motion once the hero leaves the viewport */
+.paused .lattice,
+.paused .orbitPath,
+.paused .spark,
+.paused .corner,
+.paused .kickerMark,
+.paused .scrollHint {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

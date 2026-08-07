@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { CelestialClock } from "../../components/CelestialClock/CelestialClock";
 import { Wordmark } from "../../components/Wordmark/Wordmark";
 import { site } from "../../data/site";
@@ -14,13 +15,37 @@ const orbits = [
 ] as const;
 
 export function Hero({ onExplore }: HeroProps) {
+  const heroRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    const node = heroRef.current;
+    if (!node) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        setActive(entry.isIntersecting);
+      },
+      { root: null, threshold: 0.05 },
+    );
+
+    io.observe(node);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="hero" className={styles.hero} aria-label="Opening">
+    <section
+      ref={heroRef}
+      id="hero"
+      className={`${styles.hero}${active ? "" : ` ${styles.paused}`}`}
+      aria-label="Opening"
+    >
       <div className={styles.stage} aria-hidden="true">
         <div className={styles.lattice} />
         <div className={styles.vignette} />
 
-        <CelestialClock className={styles.clock} />
+        <CelestialClock className={styles.clock} paused={!active} />
 
         <div className={styles.orbits}>
           {orbits.map((orbit) => (
@@ -47,7 +72,7 @@ export function Hero({ onExplore }: HeroProps) {
       <div className={styles.content}>
         <p className={styles.kicker}>
           <span className={styles.kickerMark} />
-          Celestial Archive
+          Portfolio
           <span className={styles.kickerMark} />
         </p>
 
@@ -55,7 +80,7 @@ export function Hero({ onExplore }: HeroProps) {
 
         <p className={styles.role}>{site.title}</p>
         <p className={styles.support}>
-          Illustrations, design, personal studies, and commissions — gathered in one golden orbit.
+          My archive for illustrations, design, personal studies, and commissions.
         </p>
 
         <button

@@ -20,8 +20,7 @@
     0 0 0 1px rgba(196, 163, 90, 0.16),
     0 10px 22px rgba(26, 22, 18, 0.06);
   transform: translate3d(0, 0, 0);
-  transition: transform 0.35s var(--ease-out);
-  will-change: transform;
+  transition: transform 0.3s var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {

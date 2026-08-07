@@ -32,6 +32,12 @@
   animation-delay: -1.5s;
 }
 
+.paused .hourHand,
+.paused .minuteHand,
+.paused .secondHand {
+  animation-play-state: paused;
+}
+
 @keyframes hand-spin {
   to {
     transform: rotate(360deg);

@@ -19,11 +19,9 @@ export function Contact({ onBackToStart }: ContactProps) {
         <RevealItem>
           <DecoDivider variant="diamond" />
         </RevealItem>
-        <RevealItem>
-          <h2 id="contact-title" className={styles.heading}>
-            Until the next orbit
-          </h2>
-        </RevealItem>
+        <h2 id="contact-title" className={styles.visuallyHidden}>
+          Contact
+        </h2>
         <RevealItem>
           <p className={styles.closing}>{site.closing}</p>
         </RevealItem>

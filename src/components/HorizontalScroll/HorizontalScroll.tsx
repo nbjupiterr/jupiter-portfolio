@@ -43,6 +43,8 @@ export const HorizontalScroll = forwardRef<
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
+    let raf = 0;
+
     const update = () => {
       if (enabled) {
         const max = scroller.scrollWidth - scroller.clientWidth;
@@ -54,7 +56,9 @@ export const HorizontalScroll = forwardRef<
           const section = document.getElementById(id);
           if (!section) continue;
           const center = section.offsetLeft + section.clientWidth / 2;
-          const distance = Math.abs(center - (scroller.scrollLeft + scroller.clientWidth / 2));
+          const distance = Math.abs(
+            center - (scroller.scrollLeft + scroller.clientWidth / 2),
+          );
           if (distance < closest) {
             closest = distance;
             activeId = id;
@@ -75,7 +79,9 @@ export const HorizontalScroll = forwardRef<
         const section = document.getElementById(id);
         if (!section) continue;
         const rect = section.getBoundingClientRect();
-        const distance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+        const distance = Math.abs(
+          rect.top + rect.height / 2 - window.innerHeight / 2,
+        );
         if (distance < closest) {
           closest = distance;
           activeId = id;
@@ -83,6 +89,14 @@ export const HorizontalScroll = forwardRef<
       }
 
       onScrollProgress(progress, activeId);
+    };
+
+    const scheduleUpdate = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        update();
+      });
     };
 
     update();
@@ -99,13 +113,15 @@ export const HorizontalScroll = forwardRef<
         if (nested && nested.scrollHeight > nested.clientHeight + 2) {
           const overflowY = getComputedStyle(nested).overflowY;
           const canScrollNested =
-            overflowY === "auto" || overflowY === "scroll" || overflowY === "overlay";
+            overflowY === "auto" ||
+            overflowY === "scroll" ||
+            overflowY === "overlay";
 
           if (canScrollNested) {
             const atTop = nested.scrollTop <= 0 && event.deltaY < 0;
             const atBottom =
-              nested.scrollTop + nested.clientHeight >= nested.scrollHeight - 1 &&
-              event.deltaY > 0;
+              nested.scrollTop + nested.clientHeight >=
+                nested.scrollHeight - 1 && event.deltaY > 0;
             if (!atTop && !atBottom) return;
           }
         }
@@ -114,22 +130,24 @@ export const HorizontalScroll = forwardRef<
         scroller.scrollLeft += event.deltaY;
       };
 
-      scroller.addEventListener("scroll", update, { passive: true });
+      scroller.addEventListener("scroll", scheduleUpdate, { passive: true });
       scroller.addEventListener("wheel", onWheel, { passive: false });
-      window.addEventListener("resize", update);
+      window.addEventListener("resize", scheduleUpdate);
 
       return () => {
-        scroller.removeEventListener("scroll", update);
+        if (raf) window.cancelAnimationFrame(raf);
+        scroller.removeEventListener("scroll", scheduleUpdate);
         scroller.removeEventListener("wheel", onWheel);
-        window.removeEventListener("resize", update);
+        window.removeEventListener("resize", scheduleUpdate);
       };
     }
 
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      if (raf) window.cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
     };
   }, [enabled, onScrollProgress]);
 

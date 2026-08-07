@@ -1,9 +1,6 @@
-import { motion, useReducedMotion, type Variants } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import {
-  bindScrollDirection,
-  getScrollDirection,
-} from "../../hooks/scrollDirection";
+import { observeReveal } from "../../hooks/revealObserver";
+import styles from "./Reveal.module.css";
 
 type RevealProps = {
   children: ReactNode;
@@ -27,115 +24,34 @@ type RevealItemProps = {
   as?: "div" | "li";
 };
 
-/**
- * Open on the way forward, close on the way back:
- * - L?R: fade in when entering the screen; keep open (no close while going forward)
- * - R?L: fade out while leaving the screen (still visible so you see it close)
- *
- * Uses the browser viewport as IO root so horizontal-scroller clipping works.
- */
-function useScrollOpenClose() {
+function useOpen() {
   const ref = useRef<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
-
-    bindScrollDirection();
-
-    const ENTER = 0.15;
-    const EXIT = 0.4;
-
-    const apply = (ratio: number, intersecting: boolean) => {
-      const dir = getScrollDirection();
-
-      if (intersecting && ratio >= ENTER) {
-        setOpen(true);
-        return;
-      }
-
-      // Only close while scrolling back, and while still partly on screen
-      if (dir < 0 && (!intersecting || ratio < EXIT)) {
-        setOpen(false);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry) return;
-        apply(entry.intersectionRatio, entry.isIntersecting);
-      },
-      {
-        root: null,
-        threshold: [0, 0.08, 0.15, 0.25, 0.4, 0.55, 0.75, 1],
-      },
-    );
-
-    observer.observe(node);
-
-    // Sync current state on mount (e.g. already on screen)
-    const rect = node.getBoundingClientRect();
-    const vw = window.innerWidth || 1;
-    const visible = Math.max(
-      0,
-      Math.min(rect.right, vw) - Math.max(rect.left, 0),
-    );
-    const ratio = rect.width > 0 ? visible / rect.width : 0;
-    apply(ratio, ratio > 0);
-
-    return () => observer.disconnect();
+    return observeReveal(node, setOpen);
   }, []);
 
   return { ref, open };
 }
 
-const itemVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    transition: { duration: 0.4, ease: "easeIn" },
-  },
-  shown: {
-    opacity: 1,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-};
-
+/** Page blocks: CSS stagger open L?R / close R?L */
 export function RevealGroup({
   children,
   className = "",
-  stagger = 0.12,
 }: RevealGroupProps) {
-  const reduceMotion = useReducedMotion();
-  const { ref, open } = useScrollOpenClose();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
+  const { ref, open } = useOpen();
 
   return (
-    <motion.div
+    <div
       ref={ref as never}
-      className={className}
-      initial="hidden"
-      animate={open ? "shown" : "hidden"}
-      variants={{
-        hidden: {
-          transition: {
-            staggerChildren: Math.max(0.08, stagger * 0.85),
-            staggerDirection: -1,
-          },
-        },
-        shown: {
-          transition: {
-            staggerChildren: stagger,
-            delayChildren: 0.03,
-          },
-        },
-      }}
+      className={`${styles.group} ${className}`}
+      data-open={open ? "true" : "false"}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -144,50 +60,28 @@ export function RevealItem({
   className = "",
   as = "div",
 }: RevealItemProps) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
-  }
-
-  const MotionTag = as === "li" ? motion.li : motion.div;
-  return (
-    <MotionTag className={className} variants={itemVariants}>
-      {children}
-    </MotionTag>
-  );
+  const Tag = as;
+  return <Tag className={`${styles.item} ${className}`}>{children}</Tag>;
 }
 
+/** Single block / gallery card - CSS opacity, shared IntersectionObserver */
 export function Reveal({
   children,
   className = "",
   delay = 0,
   as = "div",
 }: RevealProps) {
-  const reduceMotion = useReducedMotion();
-  const { ref, open } = useScrollOpenClose();
-
-  if (reduceMotion) {
-    const Tag = as;
-    return <Tag className={className}>{children}</Tag>;
-  }
-
-  const MotionTag = as === "li" ? motion.li : motion.div;
+  const { ref, open } = useOpen();
+  const Tag = as;
 
   return (
-    <MotionTag
+    <Tag
       ref={ref as never}
-      className={className}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: open ? 1 : 0 }}
-      transition={{
-        duration: open ? 0.45 : 0.5,
-        delay: open ? delay : 0,
-        ease: open ? "easeOut" : "easeIn",
-      }}
+      className={`${styles.reveal} ${className}`}
+      data-open={open ? "true" : "false"}
+      style={delay ? { transitionDelay: open ? `${delay}s` : "0s" } : undefined}
     >
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

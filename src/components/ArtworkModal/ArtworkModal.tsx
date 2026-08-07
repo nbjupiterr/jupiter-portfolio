@@ -17,7 +17,7 @@ export function ArtworkModal({
   onNavigate,
 }: ArtworkModalProps) {
   const reduceMotion = useReducedMotion();
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const open = Boolean(artwork);
 
@@ -25,7 +25,7 @@ export function ArtworkModal({
     if (!open) return;
 
     const previous = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
+    dialogRef.current?.focus();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -53,24 +53,6 @@ export function ArtworkModal({
             : (index - 1 + artworks.length) % artworks.length;
         onNavigate(artworks[nextIndex]);
       }
-
-      if (event.key === "Tab") {
-        const dialog = document.getElementById("artwork-dialog");
-        if (!dialog) return;
-        const focusable = dialog.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (event.shiftKey && document.activeElement === first) {
-          event.preventDefault();
-          last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-          event.preventDefault();
-          first.focus();
-        }
-      }
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -78,14 +60,6 @@ export function ArtworkModal({
   }, [artwork, artworks, onClose, onNavigate]);
 
   const duration = reduceMotion ? 0.12 : 0.38;
-
-  const go = (direction: -1 | 1) => {
-    if (!artwork) return;
-    const index = artworks.findIndex((item) => item.id === artwork.id);
-    if (index < 0) return;
-    const nextIndex = (index + direction + artworks.length) % artworks.length;
-    onNavigate(artworks[nextIndex]);
-  };
 
   return (
     <AnimatePresence>
@@ -99,12 +73,14 @@ export function ArtworkModal({
           onClick={onClose}
         >
           <motion.div
+            ref={dialogRef}
             id="artwork-dialog"
             className={styles.dialog}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
-            onClick={(event) => event.stopPropagation()}
+            tabIndex={-1}
+            onClick={onClose}
             initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
@@ -114,39 +90,9 @@ export function ArtworkModal({
               {artwork.title}
             </h2>
 
-            <button
-              ref={closeRef}
-              type="button"
-              className={styles.close}
-              onClick={onClose}
-              data-cursor="link"
-            >
-              Close
-            </button>
-
-            <button
-              type="button"
-              className={`${styles.nav} ${styles.prev}`}
-              onClick={() => go(-1)}
-              aria-label="Previous artwork"
-              data-cursor="link"
-            >
-              Prev
-            </button>
-
             <figure className={styles.frame}>
               <img src={artwork.fullImage} alt={artwork.altText} />
             </figure>
-
-            <button
-              type="button"
-              className={`${styles.nav} ${styles.next}`}
-              onClick={() => go(1)}
-              aria-label="Next artwork"
-              data-cursor="link"
-            >
-              Next
-            </button>
           </motion.div>
         </motion.div>
       ) : null}

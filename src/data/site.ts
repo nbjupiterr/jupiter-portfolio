@@ -1,6 +1,7 @@
 export const site = {
   name: "Jupiter",
-  title: "Digital Artist and Illustrator",
+  realName: "Gennievieve C. Begonia",
+  title: "Artist",
   linktree: "https://linktr.ee/nb.jupiterr",
   bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.`,
   focus:
